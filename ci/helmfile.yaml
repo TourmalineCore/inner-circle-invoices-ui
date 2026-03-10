@@ -1,0 +1,21 @@
+repositories:
+  - name: bitnami
+    url: https://mirror.yandex.ru/helm/charts.bitnami.com
+
+releases:
+  - name: time-invoices
+    labels:
+      app: time-invoices
+    wait: true
+    chart: bitnami/nginx
+    # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
+    version: 15.3.5
+    values:
+      - values.yaml
+      - image:
+          tag: "{{ .StateValues.image.tag }}"
+      - ingress:
+          hostname: "{{ .StateValues.ingress.hostname }}"
+      - extraConfigMapEnvVars:
+          API_ROOT_URL: "{{ .StateValues.extraConfigMapEnvVars.API_ROOT_URL }}"
+          AUTH_API_ROOT_URL: "{{ .StateValues.extraConfigMapEnvVars.AUTH_API_ROOT_URL }}"

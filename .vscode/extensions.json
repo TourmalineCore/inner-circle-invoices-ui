@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "ms-vscode-remote.remote-containers",
+    "cs50.vscode-presentation-mode",
+    "k--kato.intellij-idea-keybindings",
+    "dsbasko.create-component-helper",
+    "stylelint.vscode-stylelint",
+  ]
+}
