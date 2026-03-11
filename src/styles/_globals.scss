@@ -1,0 +1,78 @@
+@use "media" as *;
+@use "./variables" as v;
+@use "./fonts-mixin" as f;
+
+:root {
+  background-color: v.$color-background-primary;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  @include f.text;
+
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+blockquote,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: inherit;
+}
+
+li,
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.is-hidden {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+body.disable-scroll {
+  overflow: hidden; // disable scrolling
+}
+
+.error {
+  border-width: 1px;
+  border-color: v.$color-error;
+}
+
+button {
+  cursor: pointer;
+}
