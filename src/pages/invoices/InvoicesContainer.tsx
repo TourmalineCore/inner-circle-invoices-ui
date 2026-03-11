@@ -16,10 +16,12 @@ export function InvoicesContainer() {
   async function loadInvoicesDataAsync() {
     const data = [
       {
+        id: 1,
         name: `John Doe`,
         trackedHours: 160,
       },
       {
+        id: 2,
         name: `Jane Doe`,
         trackedHours: 80,
       },

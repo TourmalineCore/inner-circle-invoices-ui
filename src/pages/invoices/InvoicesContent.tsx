@@ -9,10 +9,14 @@ import { InvoiceData } from "./types"
 export const InvoicesContent = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
 
+  const {
+    invoicesData,
+  } = invoicesState
+
   return (
     <ClientTable<InvoiceData>
       tableId="invoices-table"
-      data={invoicesState.invoicesData}
+      data={invoicesData}
       columns={[
         {
           id: `Name`,
@@ -22,7 +26,15 @@ export const InvoicesContent = observer(() => {
         {
           id: `Position`,
           header: `Position`,
-          accessorFn: (row) => row.position,
+          cell: ({
+            row,
+          }) => <input
+            defaultValue={row.original.position}
+            onBlur={(e) => invoicesState.setPosition({
+              id: row.original.id,
+              position: e.target.value,
+            })}
+          />,
         },
         {
           id: `Tracked Hours`,
@@ -32,8 +44,24 @@ export const InvoicesContent = observer(() => {
         {
           id: `Rate`,
           header: `Rate`,
-          accessorFn: (row) => row.rate,
-        },
+          cell: ({
+            row,
+          }) => <input
+            type='number'
+            defaultValue={row.original.rate}
+            onBlur={(e) => {
+              invoicesState.setRate({
+                id: row.original.id,
+                rate: e.target.valueAsNumber,
+              })
+            }}
+            onKeyDown={(e) => {
+              if (e.key === `e` || e.key === `E` || e.key === `+` || e.key === `-`) {
+                e.preventDefault()
+              }
+            }}
+          />,
+        },  
         {
           id: `Total`,
           header: `Total`,
