@@ -3,9 +3,9 @@ repositories:
     url: https://mirror.yandex.ru/helm/charts.bitnami.com
 
 releases:
-  - name: time-invoices
+  - name: invoices-ui
     labels:
-      app: time-invoices
+      app: invoices-ui
     wait: true
     chart: bitnami/nginx
     # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
