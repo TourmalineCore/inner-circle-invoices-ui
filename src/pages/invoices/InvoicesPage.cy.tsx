@@ -10,9 +10,11 @@ function initializationTests() {
   WHEN render the component
   SHOULD see them
   `, () => {
+    cy.viewport(1024, 600)
+    
     mountComponent()
 
-    cy.contains(`Invoices`)
+    cy.contains(`John Doe`)
   })
 }
 

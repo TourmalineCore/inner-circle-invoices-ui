@@ -3,6 +3,7 @@ import { InvoiceData } from '../types'
 
 export class InvoicesState {
   private _invoicesData: InvoiceData[] = [] 
+  private _selectedDate: Date = new Date()
 
   constructor() {
     makeAutoObservable(this)
@@ -18,6 +19,10 @@ export class InvoicesState {
 
   get invoicesData() {
     return this._invoicesData
+  }
+
+  get selectedDate() {
+    return this._selectedDate
   }
 
   setPosition({
@@ -55,5 +60,13 @@ export class InvoicesState {
         ...this._invoicesData,
       ]
     }
+  }
+
+  setSelectedDate({
+    newDate,
+  }: {
+    newDate: Date,
+  }) {
+    this._selectedDate = newDate
   }
 }

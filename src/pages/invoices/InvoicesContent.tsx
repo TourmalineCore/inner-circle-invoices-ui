@@ -5,74 +5,86 @@ import { ClientTable } from '@tourmalinecore/react-table-responsive'
 import { useContext } from "react"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { InvoiceData } from "./types"
+import { DatePicker } from '../../components/DatePicker/DatePicker'
 
 export const InvoicesContent = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
 
   const {
     invoicesData,
+    selectedDate,
   } = invoicesState
 
   return (
-    <ClientTable<InvoiceData>
-      tableId="invoices-table"
-      data={invoicesData}
-      columns={[
-        {
-          id: `Name`,
-          header: `Name`,
-          accessorFn: (row) => row.name,
-        },
-        {
-          id: `Position`,
-          header: `Position`,
-          cell: ({
-            row,
-          }) => <input
-            defaultValue={row.original.position}
-            onBlur={(e) => invoicesState.setPosition({
-              id: row.original.id,
-              position: e.target.value,
-            })}
-          />,
-        },
-        {
-          id: `Tracked Hours`,
-          header: `Tracked Hours`,
-          accessorFn: (row) => row.trackedHours,
-        },
-        {
-          id: `Rate`,
-          header: `Rate`,
-          cell: ({
-            row,
-          }) => <input
-            type='number'
-            defaultValue={row.original.rate}
-            onBlur={(e) => {
-              invoicesState.setRate({
+    <>
+      <DatePicker 
+        selectedDate={selectedDate}
+        onChange={(date) => {
+          invoicesState.setSelectedDate({
+            newDate: date,
+          })
+        }}
+      />
+      <ClientTable<InvoiceData>
+        tableId="invoices-table"
+        data={invoicesData}
+        columns={[
+          {
+            id: `Name`,
+            header: `Name`,
+            accessorFn: (row) => row.name,
+          },
+          {
+            id: `Position`,
+            header: `Position`,
+            cell: ({
+              row,
+            }) => <input
+              defaultValue={row.original.position}
+              onBlur={(e) => invoicesState.setPosition({
                 id: row.original.id,
-                rate: e.target.valueAsNumber,
-              })
-            }}
-            onKeyDown={(e) => {
-              if (e.key === `e` || e.key === `E` || e.key === `+` || e.key === `-`) {
-                e.preventDefault()
-              }
-            }}
-          />,
-        },  
-        {
-          id: `Total`,
-          header: `Total`,
-          accessorFn: (row) => row.total,
-        },  
-      ]}
-      tcOrder={{
-        id: `Name`,
-        desc: true,
-      }}
-      tcRenderMobileTitle={(row) => row.original.name}
-    />
+                position: e.target.value,
+              })}
+            />,
+          },
+          {
+            id: `Tracked Hours`,
+            header: `Tracked Hours`,
+            accessorFn: (row) => row.trackedHours,
+          },
+          {
+            id: `Rate`,
+            header: `Rate`,
+            cell: ({
+              row,
+            }) => <input
+              type='number'
+              defaultValue={row.original.rate}
+              onBlur={(e) => {
+                invoicesState.setRate({
+                  id: row.original.id,
+                  rate: e.target.valueAsNumber,
+                })
+              }}
+              onKeyDown={(e) => {
+                if (e.key === `e` || e.key === `E` || e.key === `+` || e.key === `-`) {
+                  e.preventDefault()
+                }
+              }}
+            />,
+          },  
+          {
+            id: `Total`,
+            header: `Total`,
+            accessorFn: (row) => row.total,
+          },  
+        ]}
+        tcOrder={{
+          id: `Name`,
+          desc: true,
+        }}
+        tcRenderMobileTitle={(row) => row.original.name}
+      />
+    </>
   )
 })
