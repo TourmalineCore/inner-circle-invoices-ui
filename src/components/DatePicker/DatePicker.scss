@@ -1,6 +1,7 @@
 .date-picker {
   margin: 0;
-  border: 1px solid var(--comp-color-gray);
+  margin-bottom: 20px;
+  border: 1px solid #808080;
   border-radius: 12px;
   max-width: 224px;
   max-height: 40px;
@@ -11,13 +12,14 @@
     border: none;
     border-radius: 10px;
     padding: 8px 16px;
+    width: 100%;
     max-height: 36px;
     font-family: inherit;
     font-weight: 500;
     font-size: 16px;
     line-height: 1.25;
     color: #000;
-    background-color: var(--color-white);
+    background-color: #fff;
     cursor: pointer;
     gap: 8px;
 
@@ -28,10 +30,10 @@
   }
 
   &__arrow {
-    margin-left: 16px;
+    margin-left: auto;
   }
 }
 
 .react-datepicker-wrapper {
-  width: auto;
+  width: 100%;
 }
