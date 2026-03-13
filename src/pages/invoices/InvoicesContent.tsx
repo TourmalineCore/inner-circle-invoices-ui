@@ -1,4 +1,5 @@
 import '@tourmalinecore/react-table-responsive/styles.css'
+import './Invoices.scss'
 
 import { observer } from "mobx-react-lite"
 import { ClientTable } from '@tourmalinecore/react-table-responsive'
@@ -18,7 +19,7 @@ export const InvoicesContent = observer(() => {
   } = invoicesState
 
   return (
-    <>
+    <div className='invoices'>
       <DatePicker 
         selectedDate={selectedDate}
         onChange={(date) => {
@@ -63,6 +64,7 @@ export const InvoicesContent = observer(() => {
               row,
             }) => <input
               type='number'
+              data-cy={`invoices-rate-input-${row.original.id}`}
               defaultValue={row.original.rate}
               onBlur={(e) => {
                 invoicesState.setRate({
@@ -90,6 +92,14 @@ export const InvoicesContent = observer(() => {
         }}
         tcRenderMobileTitle={(row) => row.original.name}
       />
-    </>
+      <button
+        type="button"
+        data-cy="invoices-copy-button"
+        disabled={invoicesState.totalAmount === null}
+        className='invoices__copy-button'
+      >
+        Copy as Text
+      </button>
+    </div>
   )
 })

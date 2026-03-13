@@ -1,0 +1,9 @@
+.invoices {
+  display: flex;
+  flex-direction: column;
+
+  &__copy-button {
+    margin-top: 20px;
+    margin-left: auto;
+  }
+}

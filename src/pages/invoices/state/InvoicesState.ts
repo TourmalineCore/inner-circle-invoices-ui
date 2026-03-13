@@ -35,7 +35,8 @@ export class InvoicesState {
   get isAllRateFieldsFilled() {
     return this._invoicesData.every(invoice => 
       invoice.rate !== null &&
-      invoice.rate !== undefined,
+      invoice.rate !== undefined &&
+      !isNaN(invoice.rate),
     )
   }
 
