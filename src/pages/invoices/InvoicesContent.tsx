@@ -14,6 +14,7 @@ export const InvoicesContent = observer(() => {
     invoicesData,
     selectedDate,
     totalTrackedHours,
+    totalAmount,
   } = invoicesState
 
   return (
@@ -53,7 +54,7 @@ export const InvoicesContent = observer(() => {
             id: `Tracked Hours`,
             header: `Tracked Hours`,
             accessorFn: (row) => row.trackedHours,
-            footer: () => totalTrackedHours,
+            footer: () => `${totalTrackedHours} hours`,
           },
           {
             id: `Rate`,
@@ -78,8 +79,9 @@ export const InvoicesContent = observer(() => {
           },  
           {
             id: `Total`,
-            header: `Total`,
+            header: `Total (€)`,
             accessorFn: (row) => row.total,
+            footer: () => totalAmount || `-`,
           },  
         ]}
         tcOrder={{

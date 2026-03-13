@@ -32,6 +32,21 @@ export class InvoicesState {
     }, 0)
   }
 
+  get isAllRateFieldsFilled() {
+    return this._invoicesData.every(invoice => 
+      invoice.rate !== null &&
+      invoice.rate !== undefined,
+    )
+  }
+
+  get totalAmount(): number | null {
+    if (!this.isAllRateFieldsFilled) return null
+    
+    return this._invoicesData.reduce((sum, invoice) => {
+      return sum + (invoice.rate! * invoice.trackedHours)
+    }, 0)
+  }
+
   setPosition({
     id,
     position,
