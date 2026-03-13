@@ -25,6 +25,13 @@ export class InvoicesState {
     return this._selectedDate
   }
 
+  get totalTrackedHours() {
+    return this._invoicesData.reduce((sum, invoice) => {
+      const hours = invoice.trackedHours
+      return sum + (isNaN(hours) ? 0 : hours)
+    }, 0)
+  }
+
   setPosition({
     id,
     position,
