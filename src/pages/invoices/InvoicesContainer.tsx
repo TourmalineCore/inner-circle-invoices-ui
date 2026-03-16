@@ -7,11 +7,29 @@ export function InvoicesContainer() {
   
   useEffect(() => {
     loadInvoicesDataAsync()
+    loadProjectsDataAsync()
   }, [])
 
   return (
     <InvoicesContent/>
   )
+
+  async function loadProjectsDataAsync() {
+    const projectsData = [
+      {
+        id: 1,
+        name: `ProjectOne`,
+      },
+      {
+        id: 2,
+        name: `ProjectTwo`,
+      },
+    ]
+
+    invoicesState.initializeProjects({
+      projects : projectsData,
+    })
+  }
 
   async function loadInvoicesDataAsync() {
     const data = [
@@ -27,7 +45,7 @@ export function InvoicesContainer() {
       },
     ]
     
-    invoicesState.initialize({
+    invoicesState.initializeInvoicesData({
       invoicesData: data,
     })
   }

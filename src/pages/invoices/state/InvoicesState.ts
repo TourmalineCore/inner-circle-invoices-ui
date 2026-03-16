@@ -1,20 +1,38 @@
 import { makeAutoObservable } from 'mobx'
 import { InvoiceData } from '../types'
 
+type ProjectDto = {
+  id: number,
+  name: string,
+}
+
 export class InvoicesState {
   private _invoicesData: InvoiceData[] = [] 
   private _selectedDate: Date = new Date()
+  private _projects: ProjectDto[] = []
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  initialize({
+  initializeInvoicesData({
     invoicesData,
   }: {
     invoicesData: InvoiceData[],
   }) {
     this._invoicesData = invoicesData
+  }
+
+  initializeProjects({
+    projects,
+  }: {
+    projects: ProjectDto[],
+  }) {
+    this._projects = projects
+  }
+
+  get projects() {
+    return this._projects
   }
 
   get invoicesData() {
