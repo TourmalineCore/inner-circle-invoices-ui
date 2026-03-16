@@ -18,6 +18,22 @@ export const InvoicesContent = observer(() => {
     totalAmount,
   } = invoicesState
 
+  const handleCopyAsText = () => {
+    const invoiceText = invoicesData
+      .map(({
+        position,
+        rate,
+        trackedHours,
+      } )=> {
+        const total = rate && trackedHours ? (rate * trackedHours) : `0`
+        
+        return `${position}: ${rate}€ * ${trackedHours}h = ${total}€`
+      })
+      .join(`\n`) + `\nTotal: ${totalAmount}€`
+
+    navigator.clipboard.writeText(invoiceText)
+  }
+
   return (
     <div className='invoices'>
       <DatePicker 
@@ -44,6 +60,7 @@ export const InvoicesContent = observer(() => {
             cell: ({
               row,
             }) => <input
+              data-cy={`invoices-position-input-${row.original.id}`}
               defaultValue={row.original.position}
               onBlur={(e) => invoicesState.setPosition({
                 id: row.original.id,
@@ -95,6 +112,7 @@ export const InvoicesContent = observer(() => {
       <button
         type="button"
         data-cy="invoices-copy-button"
+        onClick={handleCopyAsText}
         disabled={invoicesState.totalAmount === null}
         className='invoices__copy-button'
       >
