@@ -17,7 +17,7 @@ function totalHoursTests() {
   WHEN emoloyees list is empty
   SHOULD return total tracked hours as 0
   `, () => {
-    invoicesState.initialize({
+    invoicesState.initializeInvoicesData({
       invoicesData: [],
     })
 
@@ -48,7 +48,7 @@ function totalHoursTests() {
       },
     ]
 
-    invoicesState.initialize({
+    invoicesState.initializeInvoicesData({
       invoicesData: mockInvoicesData,
     })
    
@@ -85,7 +85,7 @@ function totalAmountTests() {
       },
     ]
 
-    invoicesState.initialize({
+    invoicesState.initializeInvoicesData({
       invoicesData: mockInvoicesData,
     })
 
@@ -97,7 +97,7 @@ function totalAmountTests() {
   WHEN calculating total amount
   SHOULD return 0
   `, () => {
-    invoicesState.initialize({
+    invoicesState.initializeInvoicesData({
       invoicesData: [],
     })
 
@@ -126,7 +126,7 @@ function totalAmountTests() {
       },
     ]
 
-    invoicesState.initialize({
+    invoicesState.initializeInvoicesData({
       invoicesData: mockInvoicesData,
     })
 
