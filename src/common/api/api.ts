@@ -10,3 +10,14 @@
 // initApiInterceptors(apiClient.instance)
 
 // export const api = apiClient.api
+
+import axios from 'axios'
+import { API_ROOT_URL } from '../config/config'
+import { initApiInterceptors } from './initApiInterceptors'
+
+// TODO: NEED TO MAKE OUT WHY WE NEED TO REPLACE /api/time
+export const api = axios.create({
+  baseURL: API_ROOT_URL.replace(`/api/time`, ``),
+})
+
+initApiInterceptors(api)

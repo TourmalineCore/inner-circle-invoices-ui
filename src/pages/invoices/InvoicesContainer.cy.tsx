@@ -6,6 +6,7 @@ describe(`InvoicesContainer`, () => {
   describe(`Initialization`, initializationTests)
   describe(`Button Enable`, buttonEnableTests)
   describe(`Copy Functionality`, copyToClipboardTests)
+  describe(`Projects Requests`, projectsRequestsTests)
 })
 
 function initializationTests() {
@@ -130,8 +131,94 @@ function copyToClipboardTests() {
   })
 }
 
+function projectsRequestsTests() {
+  it(`
+  GIVEN invoices table
+  WHEN component mounts
+  SHOULD show loaded projects in the dropdown
+  `, () => {
+    cy.viewport(1024, 600)
+
+    cy.intercept(`GET`, `api/invoices/projects`, {
+      statusCode: 200,
+      body: [
+        {
+          id: 1,
+          name: `ProjectOne`, 
+        },
+        {
+          id: 2,
+          name: `ProjectTwo`, 
+        },
+      ],
+    })
+      .as(`getProjects`)
+
+    mountComponent()
+    
+    cy.wait(`@getProjects`)
+    
+    cy
+      .getByData(`projects-select-option`)
+      .should(`have.length`, 2)
+
+    cy
+      .getByData(`projects-select-option`)
+      .eq(0)
+      .should(`have.value`, `1`)
+      .and(`have.text`, `ProjectOne`)
+
+    cy
+      .getByData(`projects-select-option`)
+      .eq(1)
+      .should(`have.value`, `2`)
+      .and(`have.text`, `ProjectTwo`)
+  })
+
+  it(`
+  GIVEN projects dropdown
+  WHEN user selects a project
+  SHOULD update selected project and send request with this project id
+  `, () => {
+    cy.viewport(1024, 600)
+
+    cy.intercept(`GET`, `api/invoices/projects`, {
+      statusCode: 200,
+      body: [
+        {
+          id: 1,
+          name: `ProjectOne`, 
+        },
+        {
+          id: 2,
+          name: `ProjectTwo`, 
+        },
+      ],
+    })
+      .as(`getProjects`)
+
+    mountComponent()
+    
+    cy.wait(`@getProjects`)
+    
+    cy
+      .getByData(`project-select`)
+      .select(`1`)
+
+    cy
+      .get(`@setSelectedProjectIdSpy`)
+      .should(`have.been.calledOnce`)
+      .and(`have.been.calledWith`, {
+        projectId: 1, 
+      })
+  })
+}
+
 function mountComponent() {
   const invoicesState = new InvoicesState()
+  
+  cy.spy(invoicesState, `setSelectedProjectId`)
+    .as(`setSelectedProjectIdSpy`)
 
   cy.mount(
     <InvoicesStateContext.Provider value={invoicesState}>

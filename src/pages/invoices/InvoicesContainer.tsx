@@ -1,6 +1,8 @@
 import { useContext, useEffect } from "react"
 import { InvoicesContent } from "./InvoicesContent"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
+import { api } from "../../common/api/api"
+import { ProjectDto } from "./types"
 
 export function InvoicesContainer() {
   const invoicesState = useContext(InvoicesStateContext)
@@ -15,19 +17,12 @@ export function InvoicesContainer() {
   )
 
   async function loadProjectsDataAsync() {
-    const projectsData = [
-      {
-        id: 1,
-        name: `ProjectOne`,
-      },
-      {
-        id: 2,
-        name: `ProjectTwo`,
-      },
-    ]
+    const {
+      data,
+    } = await api.get<ProjectDto[]>(`/api/invoices/projects`)
 
     invoicesState.initializeProjects({
-      projects : projectsData,
+      projects : data,
     })
   }
 

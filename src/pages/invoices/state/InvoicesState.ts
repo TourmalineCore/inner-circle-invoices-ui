@@ -1,10 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import { InvoiceData } from '../types'
-
-type ProjectDto = {
-  id: number,
-  name: string,
-}
+import { InvoiceData, ProjectDto } from '../types'
 
 export class InvoicesState {
   private _invoicesData: InvoiceData[] = [] 

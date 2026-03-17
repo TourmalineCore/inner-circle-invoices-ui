@@ -6,3 +6,8 @@ export type InvoiceData = {
   rate?: number,
   total?: number | null,
 }
+
+export type ProjectDto = {
+  id: number,
+  name: string,
+}
