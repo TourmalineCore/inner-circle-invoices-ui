@@ -3,6 +3,7 @@ import { InvoicesState } from "./InvoicesState"
 describe(`InvoicesState`, () => {
   describe(`Total Hours`, totalHoursTests)
   describe(`Total Amount`, totalAmountTests)
+  describe(`Select Project`, selectProjectTests)
 })
 
 function totalHoursTests() {
@@ -14,14 +15,16 @@ function totalHoursTests() {
 
   it(`
   GIVEN invoices table
-  WHEN emoloyees list is empty
+  WHEN employees list is empty
   SHOULD return total tracked hours as 0
   `, () => {
     invoicesState.initializeInvoicesData({
       invoicesData: [],
     })
 
-    expect(invoicesState.totalTrackedHours).to.equal(0)
+    expect(invoicesState.totalTrackedHours)
+      .to
+      .equal(0)
   })
 
   it(`
@@ -52,7 +55,9 @@ function totalHoursTests() {
       invoicesData: mockInvoicesData,
     })
    
-    expect(invoicesState.totalTrackedHours).to.equal(50)
+    expect(invoicesState.totalTrackedHours)
+      .to
+      .equal(50)
   })
 }
 
@@ -89,7 +94,9 @@ function totalAmountTests() {
       invoicesData: mockInvoicesData,
     })
 
-    expect(invoicesState.totalAmount).to.equal(2450)
+    expect(invoicesState.totalAmount)
+      .to
+      .equal(2450)
   })
 
   it(`
@@ -130,6 +137,48 @@ function totalAmountTests() {
       invoicesData: mockInvoicesData,
     })
 
-    expect(invoicesState.totalAmount).to.be.null
+    expect(invoicesState.totalAmount)
+      .to
+      .be
+      .null
+  })
+}
+
+function selectProjectTests() {
+  let invoicesState: InvoicesState
+
+  beforeEach(() => {
+    invoicesState = new InvoicesState()
+  })
+
+  it(`
+  GIVEN loaded projects list
+  WHEN setSelectedProjectId is called with a project id
+  SHOULD update selectedProjectId correctly
+  `, () => {
+    invoicesState.initializeProjects({
+      projects: [
+        {
+          id: 1,
+          name: `ProjectOne`, 
+        },
+        {
+          id: 2,
+          name: `ProjectTwo`, 
+        },
+      ],
+    })
+    
+    expect(invoicesState.selectedProjectId)
+      .to
+      .be
+      .null
+
+    invoicesState.setSelectedProjectId({
+      projectId: 1, 
+    })
+    expect(invoicesState.selectedProjectId)
+      .to
+      .equal(1)
   })
 }

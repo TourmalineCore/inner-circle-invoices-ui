@@ -14,8 +14,10 @@ export const InvoicesContent = observer(() => {
   const {
     invoicesData,
     selectedDate,
+    selectedProjectId,
     totalTrackedHours,
     totalAmount,
+    
   } = invoicesState
 
   const handleCopyAsText = () => {
@@ -36,14 +38,50 @@ export const InvoicesContent = observer(() => {
 
   return (
     <div className='invoices'>
-      <DatePicker 
-        selectedDate={selectedDate}
-        onChange={(date) => {
-          invoicesState.setSelectedDate({
-            newDate: date,
-          })
-        }}
-      />
+      <div className='invoices__head'>
+        {
+          invoicesState.projects.length > 0 && (
+            <select
+              className='invoices__project-select'
+              name='project'
+              data-cy="project-select"
+              value={selectedProjectId || ``}
+              onChange={(e) => {
+                invoicesState.setSelectedProjectId({ 
+                  projectId: e.target.value === `` ? null : Number(e.target.value), 
+                })
+              }}
+            >
+              <option
+                className='invoices__empty-project-option'
+                value=""
+              >
+                Choose project
+              </option>
+              {invoicesState.projects.map(({
+                id,
+                name,
+              }) => (
+                <option
+                  data-cy="projects-select-option"
+                  key={id}
+                  value={id}
+                >
+                  {name}
+                </option>
+              ))}
+            </select>
+          )
+        }
+        <DatePicker 
+          selectedDate={selectedDate}
+          onChange={(date) => {
+            invoicesState.setSelectedDate({
+              newDate: date,
+            })
+          }}
+        />
+      </div>
       <ClientTable<InvoiceData>
         tableId="invoices-table"
         data={invoicesData}
@@ -115,6 +153,7 @@ export const InvoicesContent = observer(() => {
         onClick={handleCopyAsText}
         disabled={invoicesState.totalAmount === null}
         className='invoices__copy-button'
+        title={invoicesState.totalAmount === null ? `Fill in all rates to enable copying` : `Copy as text`}
       >
         Copy as Text
       </button>

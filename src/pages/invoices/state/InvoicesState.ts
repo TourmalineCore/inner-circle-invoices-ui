@@ -10,6 +10,7 @@ export class InvoicesState {
   private _invoicesData: InvoiceData[] = [] 
   private _selectedDate: Date = new Date()
   private _projects: ProjectDto[] = []
+  private _selectedProjectId: number | null = null 
 
   constructor() {
     makeAutoObservable(this)
@@ -33,6 +34,10 @@ export class InvoicesState {
 
   get projects() {
     return this._projects
+  }
+
+  get selectedProjectId() {
+    return this._selectedProjectId
   }
 
   get invoicesData() {
@@ -65,7 +70,15 @@ export class InvoicesState {
       return sum + (invoice.rate! * invoice.trackedHours)
     }, 0)
   }
-
+  
+  setSelectedProjectId({
+    projectId,
+  }: {
+    projectId: number | null, 
+  }) {
+    this._selectedProjectId = projectId
+  }
+  
   setPosition({
     id,
     position,
