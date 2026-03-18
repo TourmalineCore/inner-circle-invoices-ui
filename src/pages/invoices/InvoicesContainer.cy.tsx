@@ -2,41 +2,78 @@ import { InvoicesContainer } from "./InvoicesContainer"
 import { InvoicesState } from "./state/InvoicesState"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 
+const PROJECTS = [
+  {
+    id: 1,
+    name: `ProjectOne`,
+  },
+  {
+    id: 2,
+    name: `ProjectTwo`,
+  },
+]
+
+const INVOICE_DATA = [
+  {
+    id: 1,
+    name: `John Doe`,
+    trackedHours: 160,
+  },
+  {
+    id: 2,
+    name: `Jane Doe`,
+    trackedHours: 80,
+  },
+]
+
 describe(`InvoicesContainer`, () => {
   describe(`Initialization`, initializationTests)
   describe(`Button Enable`, buttonEnableTests)
   describe(`Copy Functionality`, copyToClipboardTests)
-  describe(`Projects Requests`, projectsRequestsTests)
-  describe(`Invoices Requests`, invoicesRequestsTests)
+  describe(`Projects`, projectsTests)
 })
 
 function initializationTests() {
   it(`
-  GIVEN invoices data from network
-  WHEN render the component
-  SHOULD see it
+  GIVEN projects dropdown
+  WHEN select project
+  SHOULD see loaded data for this project in the table
   `, () => {
     cy.viewport(1024, 600)
 
-    cy.intercept(`GET`, `api/invoices`, {
-      statusCode: 200,
-      body: [
-        {
-          id: 1,
-          name: `John Doe`,
-          trackedHours: 160,
-        },
-        {
-          id: 2,
-          name: `Jane Doe`,
-          trackedHours: 80,
-        },
-      ],
-    })
+    cy.intercept(
+      `GET`,
+      `*/invoices/projects`,
+      {
+        statusCode: 200,
+        body: PROJECTS,
+      })
+      .as(`getProjects`)
+
+    cy.intercept(
+      `GET`,
+      `*/invoices/1`,
+      {
+        statusCode: 200,
+        body: INVOICE_DATA, 
+      },
+    ) 
+      .as(`getInvoices`)
 
     mountComponent()
-    
+
+    cy.wait(`@getProjects`)
+
+    cy.getByData(`project-select`)
+      .select(`1`)
+
+    cy.wait(`@getInvoices`)
+
     cy.contains(`John Doe`)
+
+    cy
+      .contains(`160`)
+      .should(`be.visible`)
   })
 }
 
@@ -50,23 +87,27 @@ function buttonEnableTests() {
   `, () => {
     cy.viewport(1024, 600)
 
-    cy.intercept(`GET`, `api/invoices`, {
+    cy.intercept(
+      `GET`,
+      `*/invoices/projects`,
+      {
+        statusCode: 200,
+        body: PROJECTS,
+      })
+      .as(`getProjects`)
+
+    cy.intercept(`GET`, `api/invoices/1`, {
       statusCode: 200,
-      body: [
-        {
-          id: 1,
-          name: `John Doe`,
-          trackedHours: 160,
-        },
-        {
-          id: 2,
-          name: `Jane Doe`,
-          trackedHours: 80,
-        },
-      ],
+      body: INVOICE_DATA,
     })
+      .as(`getInvoices`)
     
     mountComponent()
+
+    cy.wait(`@getProjects`)
+
+    cy.getByData(`project-select`)
+      .select(`1`)
     
     cy
       .getByData(`invoices-copy-button`)
@@ -112,23 +153,31 @@ function copyToClipboardTests() {
   `, () => {
     cy.viewport(1024, 600)
 
-    cy.intercept(`GET`, `api/invoices`, {
-      statusCode: 200,
-      body: [
-        {
-          id: 1,
-          name: `John Doe`,
-          trackedHours: 160,
-        },
-        {
-          id: 2,
-          name: `Jane Doe`,
-          trackedHours: 80,
-        },
-      ],
-    })
+    cy.intercept(
+      `GET`,
+      `*/invoices/projects`,
+      {
+        statusCode: 200,
+        body: PROJECTS,
+      })
+      .as(`getProjects`)
+
+    cy.intercept(
+      `GET`,
+      `*/invoices/1`,
+      {
+        statusCode: 200,
+        body: INVOICE_DATA, 
+      },
+    ) 
+      .as(`getInvoices`)
 
     mountComponent()
+
+    cy.wait(`@getProjects`)
+
+    cy.getByData(`project-select`)
+      .select(`1`)
     
     cy
       .getByData(`invoices-rate-input-1`)
@@ -180,7 +229,7 @@ function copyToClipboardTests() {
   })
 }
 
-function projectsRequestsTests() {
+function projectsTests() {
   it(`
   GIVEN invoices table
   WHEN component mounts
@@ -190,16 +239,7 @@ function projectsRequestsTests() {
 
     cy.intercept(`GET`, `api/invoices/projects`, {
       statusCode: 200,
-      body: [
-        {
-          id: 1,
-          name: `ProjectOne`, 
-        },
-        {
-          id: 2,
-          name: `ProjectTwo`, 
-        },
-      ],
+      body: PROJECTS,
     })
       .as(`getProjects`)
 
@@ -233,16 +273,7 @@ function projectsRequestsTests() {
 
     cy.intercept(`GET`, `api/invoices/projects`, {
       statusCode: 200,
-      body: [
-        {
-          id: 1,
-          name: `ProjectOne`, 
-        },
-        {
-          id: 2,
-          name: `ProjectTwo`, 
-        },
-      ],
+      body: PROJECTS,
     })
       .as(`getProjects`)
 
@@ -260,45 +291,6 @@ function projectsRequestsTests() {
       .and(`have.been.calledWith`, {
         projectId: 1, 
       })
-  })
-}
-
-function invoicesRequestsTests() {
-  it(`
-  GIVEN invoices table
-  WHEN component mounts
-  SHOULD load employees names and tracked time into the table
-  `, () => {
-    cy.viewport(1024, 600)
-
-    cy.intercept(`GET`, `api/invoices`, {
-      statusCode: 200,
-      body: [
-        {
-          id: 1,
-          name: `John Doe`,
-          trackedHours: 160,
-        },
-        {
-          id: 2,
-          name: `Jane Doe`,
-          trackedHours: 80,
-        },
-      ],
-    })
-      .as(`getInvoices`)
-
-    mountComponent()
-    
-    cy.wait(`@getInvoices`)
-
-    cy
-      .contains(`John Doe`)
-      .should(`be.visible`)
-
-    cy
-      .contains(`160`)
-      .should(`be.visible`)
   })
 }
 

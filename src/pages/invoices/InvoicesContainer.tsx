@@ -3,14 +3,29 @@ import { InvoicesContent } from "./InvoicesContent"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { api } from "../../common/api/api"
 import { InvoiceData, ProjectDto } from "./types"
+import { observer } from "mobx-react-lite"
 
-export function InvoicesContainer() {
+export const InvoicesContainer = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
   
   useEffect(() => {
-    loadInvoicesDataAsync()
     loadProjectsDataAsync()
   }, [])
+
+  useEffect(() => {
+    if (invoicesState.selectedProjectId !== null) {
+      loadInvoicesDataForProjectAsync({ 
+        projectId: invoicesState.selectedProjectId, 
+      })
+    }
+    else {
+      invoicesState.initializeInvoicesData({
+        invoicesData: [],
+      })
+    }
+  }, [
+    invoicesState.selectedProjectId,
+  ])
 
   return (
     <InvoicesContent/>
@@ -22,17 +37,21 @@ export function InvoicesContainer() {
     } = await api.get<ProjectDto[]>(`/api/invoices/projects`)
 
     invoicesState.initializeProjects({
-      projects : data,
+      projects: data,
     })
   }
 
-  async function loadInvoicesDataAsync() {
+  async function loadInvoicesDataForProjectAsync({
+    projectId,
+  }: {
+    projectId: number,
+  }) {
     const {
       data,
-    } = await api.get<InvoiceData[]>(`/api/invoices`)
+    } = await api.get<InvoiceData[]>(`/api/invoices/${projectId}`)
 
     invoicesState.initializeInvoicesData({
       invoicesData: data,
     })
   }
-}
+})
