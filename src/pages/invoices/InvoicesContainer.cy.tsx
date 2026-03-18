@@ -7,6 +7,7 @@ describe(`InvoicesContainer`, () => {
   describe(`Button Enable`, buttonEnableTests)
   describe(`Copy Functionality`, copyToClipboardTests)
   describe(`Projects Requests`, projectsRequestsTests)
+  describe(`Invoices Requests`, invoicesRequestsTests)
 })
 
 function initializationTests() {
@@ -16,6 +17,22 @@ function initializationTests() {
   SHOULD see it
   `, () => {
     cy.viewport(1024, 600)
+
+    cy.intercept(`GET`, `api/invoices`, {
+      statusCode: 200,
+      body: [
+        {
+          id: 1,
+          name: `John Doe`,
+          trackedHours: 160,
+        },
+        {
+          id: 2,
+          name: `Jane Doe`,
+          trackedHours: 80,
+        },
+      ],
+    })
 
     mountComponent()
     
@@ -32,6 +49,22 @@ function buttonEnableTests() {
   SHOULD disable Copy as Text button
   `, () => {
     cy.viewport(1024, 600)
+
+    cy.intercept(`GET`, `api/invoices`, {
+      statusCode: 200,
+      body: [
+        {
+          id: 1,
+          name: `John Doe`,
+          trackedHours: 160,
+        },
+        {
+          id: 2,
+          name: `Jane Doe`,
+          trackedHours: 80,
+        },
+      ],
+    })
     
     mountComponent()
     
@@ -78,6 +111,22 @@ function copyToClipboardTests() {
   SHOULD copy correct invoice text to clipboard
   `, () => {
     cy.viewport(1024, 600)
+
+    cy.intercept(`GET`, `api/invoices`, {
+      statusCode: 200,
+      body: [
+        {
+          id: 1,
+          name: `John Doe`,
+          trackedHours: 160,
+        },
+        {
+          id: 2,
+          name: `Jane Doe`,
+          trackedHours: 80,
+        },
+      ],
+    })
 
     mountComponent()
     
@@ -211,6 +260,45 @@ function projectsRequestsTests() {
       .and(`have.been.calledWith`, {
         projectId: 1, 
       })
+  })
+}
+
+function invoicesRequestsTests() {
+  it(`
+  GIVEN invoices table
+  WHEN component mounts
+  SHOULD load employees names and tracked time into the table
+  `, () => {
+    cy.viewport(1024, 600)
+
+    cy.intercept(`GET`, `api/invoices`, {
+      statusCode: 200,
+      body: [
+        {
+          id: 1,
+          name: `John Doe`,
+          trackedHours: 160,
+        },
+        {
+          id: 2,
+          name: `Jane Doe`,
+          trackedHours: 80,
+        },
+      ],
+    })
+      .as(`getInvoices`)
+
+    mountComponent()
+    
+    cy.wait(`@getInvoices`)
+
+    cy
+      .contains(`John Doe`)
+      .should(`be.visible`)
+
+    cy
+      .contains(`160`)
+      .should(`be.visible`)
   })
 }
 
