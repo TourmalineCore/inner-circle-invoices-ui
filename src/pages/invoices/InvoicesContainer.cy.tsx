@@ -27,6 +27,24 @@ const INVOICE_DATA = [
 ]
 
 describe(`InvoicesContainer`, () => {
+  beforeEach(() => {
+    cy.viewport(1024, 600)
+
+    cy.intercept(
+      `GET`,
+      `*/invoices/projects`,
+      {
+        statusCode: 200,
+        body: PROJECTS,
+      },
+    )
+      .as(`getProjects`)
+
+    mountComponent()
+    
+    cy.wait(`@getProjects`)
+  })
+
   describe(`Initialization`, initializationTests)
   describe(`Button Enable`, buttonEnableTests)
   describe(`Copy Functionality`, copyToClipboardTests)
@@ -39,17 +57,6 @@ function initializationTests() {
   WHEN select project
   SHOULD see loaded data for this project in the table
   `, () => {
-    cy.viewport(1024, 600)
-
-    cy.intercept(
-      `GET`,
-      `*/invoices/projects`,
-      {
-        statusCode: 200,
-        body: PROJECTS,
-      })
-      .as(`getProjects`)
-
     cy.intercept(
       `GET`,
       `*/invoices/1`,
@@ -59,10 +66,6 @@ function initializationTests() {
       },
     ) 
       .as(`getInvoices`)
-
-    mountComponent()
-
-    cy.wait(`@getProjects`)
 
     cy.getByData(`project-select`)
       .select(`1`)
@@ -85,29 +88,20 @@ function buttonEnableTests() {
   AND when total amount is not calculated because rate filled was emptied
   SHOULD disable Copy as Text button
   `, () => {
-    cy.viewport(1024, 600)
-
     cy.intercept(
       `GET`,
-      `*/invoices/projects`,
+      `*/invoices/1`, 
       {
         statusCode: 200,
-        body: PROJECTS,
-      })
-      .as(`getProjects`)
-
-    cy.intercept(`GET`, `api/invoices/1`, {
-      statusCode: 200,
-      body: INVOICE_DATA,
-    })
+        body: INVOICE_DATA,
+      },
+    )
       .as(`getInvoices`)
     
-    mountComponent()
-
-    cy.wait(`@getProjects`)
-
     cy.getByData(`project-select`)
       .select(`1`)
+    
+    cy.wait(`@getInvoices`)
     
     cy
       .getByData(`invoices-copy-button`)
@@ -151,17 +145,6 @@ function copyToClipboardTests() {
   WHEN Copy as Text button is clicked
   SHOULD copy correct invoice text to clipboard
   `, () => {
-    cy.viewport(1024, 600)
-
-    cy.intercept(
-      `GET`,
-      `*/invoices/projects`,
-      {
-        statusCode: 200,
-        body: PROJECTS,
-      })
-      .as(`getProjects`)
-
     cy.intercept(
       `GET`,
       `*/invoices/1`,
@@ -172,12 +155,11 @@ function copyToClipboardTests() {
     ) 
       .as(`getInvoices`)
 
-    mountComponent()
-
-    cy.wait(`@getProjects`)
-
-    cy.getByData(`project-select`)
+    cy
+      .getByData(`project-select`)
       .select(`1`)
+    
+    cy.wait(`@getInvoices`)
     
     cy
       .getByData(`invoices-rate-input-1`)
@@ -234,19 +216,7 @@ function projectsTests() {
   GIVEN invoices table
   WHEN component mounts
   SHOULD show loaded projects in the dropdown
-  `, () => {
-    cy.viewport(1024, 600)
-
-    cy.intercept(`GET`, `api/invoices/projects`, {
-      statusCode: 200,
-      body: PROJECTS,
-    })
-      .as(`getProjects`)
-
-    mountComponent()
-    
-    cy.wait(`@getProjects`)
-    
+  `, () => {    
     cy
       .getByData(`projects-select-option`)
       .should(`have.length`, 2)
@@ -269,18 +239,6 @@ function projectsTests() {
   WHEN user selects a project
   SHOULD update selected project and send request with this project id
   `, () => {
-    cy.viewport(1024, 600)
-
-    cy.intercept(`GET`, `api/invoices/projects`, {
-      statusCode: 200,
-      body: PROJECTS,
-    })
-      .as(`getProjects`)
-
-    mountComponent()
-    
-    cy.wait(`@getProjects`)
-    
     cy
       .getByData(`project-select`)
       .select(`1`)
