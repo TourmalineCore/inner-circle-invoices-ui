@@ -25,6 +25,7 @@ export const InvoicesContainer = observer(() => {
     }
   }, [
     invoicesState.selectedProjectId,
+    invoicesState.selectedDate,
   ])
 
   return (
@@ -48,7 +49,9 @@ export const InvoicesContainer = observer(() => {
   }) {
     const {
       data,
-    } = await api.get<InvoiceData[]>(`/api/invoices/${projectId}`)
+    } = await api.get<InvoiceData[]>(
+      `/api/invoices/?projectId=${projectId}&month=${invoicesState.monthYearDate.month}&year=${invoicesState.monthYearDate.year}`,
+    )
 
     invoicesState.initializeInvoicesData({
       invoicesData: data,

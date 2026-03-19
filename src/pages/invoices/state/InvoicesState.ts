@@ -43,6 +43,15 @@ export class InvoicesState {
     return this._selectedDate
   }
 
+  get monthYearDate() {
+    const month = this._selectedDate.getMonth() + 1
+    const year = this._selectedDate.getFullYear()
+    return {
+      month,
+      year,
+    }
+  }
+
   get totalTrackedHours() {
     return this._invoicesData.reduce((sum, invoice) => {
       const hours = invoice.trackedHours

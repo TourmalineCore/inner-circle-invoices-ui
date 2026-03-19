@@ -59,7 +59,7 @@ function initializationTests() {
   `, () => {
     cy.intercept(
       `GET`,
-      `*/invoices/1`,
+      `*/invoices/?projectId=1&month=3&year=2026`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 
@@ -90,7 +90,7 @@ function buttonEnableTests() {
   `, () => {
     cy.intercept(
       `GET`,
-      `*/invoices/1`, 
+      `*/invoices/?projectId=1&month=3&year=2026`,
       {
         statusCode: 200,
         body: INVOICE_DATA,
@@ -147,7 +147,7 @@ function copyToClipboardTests() {
   `, () => {
     cy.intercept(
       `GET`,
-      `*/invoices/1`,
+      `*/invoices/?projectId=1&month=3&year=2026`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 
