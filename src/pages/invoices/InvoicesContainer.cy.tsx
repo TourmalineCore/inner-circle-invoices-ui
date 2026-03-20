@@ -16,7 +16,7 @@ const PROJECTS = {
 }
 
 const INVOICE_DATA = {
-  employeesInvoicesByProject: [
+  employeesEntries: [
     {
       id: 1,
       name: `John Doe`,

@@ -1,5 +1,5 @@
 export type InvoicesApiResponse = {
-  employeesInvoicesByProject: InvoiceData[],
+  employeesEntries: InvoiceData[],
 }
 
 export type ProjectsApiResponse = {
