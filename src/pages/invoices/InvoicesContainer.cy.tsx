@@ -2,30 +2,33 @@ import { InvoicesContainer } from "./InvoicesContainer"
 import { InvoicesState } from "./state/InvoicesState"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 
-const PROJECTS = [
-  {
-    id: 1,
-    name: `ProjectOne`,
-  },
-  {
-    id: 2,
-    name: `ProjectTwo`,
-  },
-]
+const PROJECTS = {
+  projects: [
+    {
+      id: 1,
+      name: `ProjectOne`,
+    },
+    {
+      id: 2,
+      name: `ProjectTwo`,
+    },
+  ],
+}
 
-const INVOICE_DATA = [
-  {
-    id: 1,
-    name: `John Doe`,
-    trackedHours: 160,
-  },
-  {
-    id: 2,
-    name: `Jane Doe`,
-    trackedHours: 80,
-  },
-]
-
+const INVOICE_DATA = {
+  employeesInvoicesByProject: [
+    {
+      id: 1,
+      name: `John Doe`,
+      trackedHours: 160,
+    },
+    {
+      id: 2,
+      name: `Jane Doe`,
+      trackedHours: 80,
+    },
+  ],
+}
 describe(`InvoicesContainer`, () => {
   beforeEach(() => {
     cy.viewport(1024, 600)

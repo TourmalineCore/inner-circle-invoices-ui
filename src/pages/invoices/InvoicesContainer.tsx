@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react"
 import { InvoicesContent } from "./InvoicesContent"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { api } from "../../common/api/api"
-import { InvoiceData, ProjectDto } from "./types"
+// import { InvoiceData, InvoicesApiResponse, ProjectDto } from "./types"
 import { observer } from "mobx-react-lite"
 
 export const InvoicesContainer = observer(() => {
@@ -34,11 +34,13 @@ export const InvoicesContainer = observer(() => {
 
   async function loadProjectsDataAsync() {
     const {
-      data,
-    } = await api.get<ProjectDto[]>(`/api/invoices/projects`)
+      data: {
+        projects,
+      },
+    } = await api.get<any>(`/api/invoices/projects`)
 
     invoicesState.initializeProjects({
-      projects: data,
+      projects: projects,
     })
   }
 
@@ -48,13 +50,15 @@ export const InvoicesContainer = observer(() => {
     projectId: number,
   }) {
     const {
-      data,
-    } = await api.get<InvoiceData[]>(
+      data: {
+        employeesInvoicesByProject,
+      },
+    } = await api.get<any>(
       `/api/invoices/?projectId=${projectId}&month=${invoicesState.monthYearDate.month}&year=${invoicesState.monthYearDate.year}`,
     )
 
     invoicesState.initializeInvoicesData({
-      invoicesData: data,
+      invoicesData: employeesInvoicesByProject,
     })
   }
 })
