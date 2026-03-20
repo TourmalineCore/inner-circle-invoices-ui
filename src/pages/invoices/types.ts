@@ -1,3 +1,11 @@
+export type InvoicesApiResponse = {
+  employeesInvoicesByProject: InvoiceData[],
+}
+
+export type ProjectsApiResponse = {
+  projects: ProjectDto[],
+}
+
 export type InvoiceData = {
   id: number,
   name: string,
