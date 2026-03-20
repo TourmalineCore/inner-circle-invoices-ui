@@ -7,6 +7,7 @@ import { useContext } from "react"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { InvoiceData } from "./types"
 import { DatePicker } from '../../components/DatePicker/DatePicker'
+import { formatCurrency } from '../../common/utils/formatCurrency'
 
 export const InvoicesContent = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
@@ -17,7 +18,6 @@ export const InvoicesContent = observer(() => {
     selectedProjectId,
     totalTrackedHours,
     totalAmount,
-    
   } = invoicesState
 
   const handleCopyAsText = () => {
@@ -27,11 +27,15 @@ export const InvoicesContent = observer(() => {
         rate,
         trackedHours,
       } )=> {
-        const total = rate && trackedHours ? (rate * trackedHours) : `0`
+        const total = rate! * trackedHours
         
-        return `${position}: ${rate}€ * ${trackedHours}h = ${total}€`
+        return `${position}: €${rate} * ${trackedHours}h = €${formatCurrency({
+          value:total,
+        })}`
       })
-      .join(`\n`) + `\nTotal: ${totalAmount}€`
+      .join(`\n`) + `\nTotal: €${formatCurrency({
+      value:totalAmount,
+    })}`
 
     navigator.clipboard.writeText(invoiceText)
   }
@@ -137,8 +141,12 @@ export const InvoicesContent = observer(() => {
           {
             id: `Total`,
             header: `Total (€)`,
-            accessorFn: (row) => row.total,
-            footer: () => totalAmount || `-`,
+            accessorFn: (row) => formatCurrency({
+              value:row.total,
+            }),
+            footer: () => formatCurrency({
+              value:totalAmount,
+            }) || `-`,
           },  
         ]}
         tcOrder={{
@@ -151,9 +159,9 @@ export const InvoicesContent = observer(() => {
         type="button"
         data-cy="invoices-copy-button"
         onClick={handleCopyAsText}
-        disabled={invoicesState.totalAmount === null}
+        disabled={totalAmount === null}
         className='invoices__copy-button'
-        title={invoicesState.totalAmount === null ? `Fill in all rates to enable copying` : `Copy as text`}
+        title={totalAmount === null ? `Fill in all rates to enable copying` : `Copy as text`}
       >
         Copy as Text
       </button>

@@ -209,7 +209,7 @@ function copyToClipboardTests() {
       .get(`@copyToClipboard`)
       .should(
         `have.been.calledOnceWith`,
-        `Developer: 50€ * 160h = 8000€\nDesigner: 45€ * 80h = 3600€\nTotal: 11600€`,
+        `Developer: €50 * 160h = €8 000\nDesigner: €45 * 80h = €3 600\nTotal: €11 600`,
       )
   })
 }
