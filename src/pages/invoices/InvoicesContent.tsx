@@ -7,7 +7,7 @@ import { useContext } from "react"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { InvoiceData } from "./types"
 import { DatePicker } from '../../components/DatePicker/DatePicker'
-import { formatCurrency } from '../../common/utils/formatCurrency'
+import { formatThousands } from '../../common/utils/formatThousands'
 
 export const InvoicesContent = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
@@ -29,11 +29,11 @@ export const InvoicesContent = observer(() => {
       } )=> {
         const total = rate! * trackedHours
         
-        return `${position}: €${rate} * ${trackedHours}h = €${formatCurrency({
+        return `${position}: €${rate} * ${trackedHours}h = €${formatThousands({
           value:total,
         })}`
       })
-      .join(`\n`) + `\nTotal: €${formatCurrency({
+      .join(`\n`) + `\nTotal: €${formatThousands({
       value:totalAmount,
     })}`
 
@@ -141,10 +141,10 @@ export const InvoicesContent = observer(() => {
           {
             id: `Total`,
             header: `Total (€)`,
-            accessorFn: (row) => formatCurrency({
+            accessorFn: (row) => formatThousands({
               value:row.total,
             }),
-            footer: () => formatCurrency({
+            footer: () => formatThousands({
               value:totalAmount,
             }) || `-`,
           },  
