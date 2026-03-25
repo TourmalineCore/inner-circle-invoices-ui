@@ -124,11 +124,7 @@ export const InvoicesContent = observer(() => {
                   rate: e.target.valueAsNumber,
                 })
               }}
-              onKeyDown={(e) => {
-                if (e.key === `e` || e.key === `E` || e.key === `+` || e.key === `-`) {
-                  e.preventDefault()
-                }
-              }}
+              onKeyDown={preventInvalidNumberInput}
             />,
           },  
           {
@@ -157,3 +153,9 @@ export const InvoicesContent = observer(() => {
     </div>
   )
 })
+
+function preventInvalidNumberInput(e: React.KeyboardEvent<HTMLInputElement>) {
+  if (e.key === `e` || e.key === `E` || e.key === `+` || e.key === `-`) {
+    e.preventDefault()
+  }
+}
