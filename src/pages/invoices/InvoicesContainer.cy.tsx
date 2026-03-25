@@ -62,7 +62,7 @@ function initializationTests() {
   `, () => {
     cy.intercept(
       `GET`,
-      `*/invoices/?projectId=1&month=3&year=2026`,
+      `*/invoices/employees-entries-by-project-and-period?projectId=1&month=3&year=2026`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 
@@ -93,7 +93,7 @@ function buttonEnableTests() {
   `, () => {
     cy.intercept(
       `GET`,
-      `*/invoices/?projectId=1&month=3&year=2026`,
+      `*/invoices/employees-entries-by-project-and-period?projectId=1&month=3&year=2026`,
       {
         statusCode: 200,
         body: INVOICE_DATA,
@@ -150,7 +150,7 @@ function copyToClipboardTests() {
   `, () => {
     cy.intercept(
       `GET`,
-      `*/invoices/?projectId=1&month=3&year=2026`,
+      `*/invoices/employees-entries-by-project-and-period?projectId=1&month=3&year=2026`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 
