@@ -18,11 +18,6 @@ export const InvoicesContainer = observer(() => {
         projectId: invoicesState.selectedProjectId, 
       })
     }
-    else {
-      invoicesState.initializeInvoicesData({
-        invoicesData: [],
-      })
-    }
   }, [
     invoicesState.selectedProjectId,
     invoicesState.selectedDate,
@@ -40,7 +35,7 @@ export const InvoicesContainer = observer(() => {
     } = await api.get<ProjectsApiResponse>(`/api/invoices/projects`)
 
     invoicesState.initializeProjects({
-      projects: projects,
+      projects,
     })
   }
 

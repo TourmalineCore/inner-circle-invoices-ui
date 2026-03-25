@@ -18,6 +18,7 @@ export const InvoicesContent = observer(() => {
     selectedProjectId,
     totalTrackedHours,
     totalAmount,
+    projects,
   } = invoicesState
 
   const handleCopyAsText = () => {
@@ -56,7 +57,7 @@ export const InvoicesContent = observer(() => {
           >
             Choose project
           </option>
-          {invoicesState.projects.map(({
+          {projects.map(({
             id,
             name,
           }) => (
