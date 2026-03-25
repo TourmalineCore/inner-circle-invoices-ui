@@ -45,10 +45,10 @@ export const InvoicesContent = observer(() => {
               className='invoices__project-select'
               name='project'
               data-cy="project-select"
-              value={selectedProjectId || ``}
+              value={selectedProjectId}
               onChange={(e) => {
                 invoicesState.setSelectedProjectId({ 
-                  projectId: e.target.value === `` ? null : Number(e.target.value), 
+                  projectId: Number(e.target.value), 
                 })
               }}
             >

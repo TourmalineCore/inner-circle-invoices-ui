@@ -13,7 +13,7 @@ export const InvoicesContainer = observer(() => {
   }, [])
 
   useEffect(() => {
-    if (invoicesState.selectedProjectId !== null) {
+    if (invoicesState.selectedProjectId !== ``) {
       loadInvoicesDataForProjectAsync({ 
         projectId: invoicesState.selectedProjectId, 
       })

@@ -5,7 +5,7 @@ export class InvoicesState {
   private _invoicesData: InvoiceData[] = [] 
   private _selectedDate: Date = new Date()
   private _projects: ProjectDto[] = []
-  private _selectedProjectId: number | null = null 
+  private _selectedProjectId: number | `` = `` 
 
   constructor() {
     makeAutoObservable(this)
@@ -60,15 +60,16 @@ export class InvoicesState {
   }
 
   get isAllRateFieldsFilled() {
-    return this._invoicesData.every(invoice => 
+    return this._invoicesData.every((invoice) => 
       invoice.rate !== null &&
-      invoice.rate !== undefined &&
-      !isNaN(invoice.rate),
+      invoice.rate !== undefined, 
     )
   }
 
-  get totalAmount(): number | null {
-    if (!this.isAllRateFieldsFilled) return null
+  get totalAmount() {
+    if (!this.isAllRateFieldsFilled) {
+      return null
+    }
     
     return this._invoicesData.reduce((sum, invoice) => {
       return sum + (invoice.rate! * invoice.trackedHours)
@@ -78,7 +79,7 @@ export class InvoicesState {
   setSelectedProjectId({
     projectId,
   }: {
-    projectId: number | null, 
+    projectId: number, 
   }) {
     this._selectedProjectId = projectId
   }
