@@ -54,7 +54,7 @@ export const InvoicesContent = observer(() => {
             className='invoices__empty-project-option'
             value=""
           >
-                Choose project
+            Choose project
           </option>
           {invoicesState.projects.map(({
             id,
