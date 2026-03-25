@@ -20,7 +20,7 @@ export const InvoicesContainer = observer(() => {
     }
   }, [
     invoicesState.selectedProjectId,
-    invoicesState.selectedDate,
+    invoicesState.selectedMonth,
   ])
 
   return (

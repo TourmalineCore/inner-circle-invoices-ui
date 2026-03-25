@@ -39,7 +39,7 @@ export class InvoicesState {
     return this._invoicesData
   }
 
-  get selectedDate() {
+  get selectedMonth() {
     return this._selectedDate
   }
 
