@@ -12,7 +12,7 @@ export type InvoiceData = {
   position?: string,
   trackedHours: number,
   rate?: number,
-  total?: number | null,
+  total: number | null,
 }
 
 export type ProjectDto = {

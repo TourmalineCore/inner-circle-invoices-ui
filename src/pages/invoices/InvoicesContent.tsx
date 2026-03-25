@@ -29,13 +29,9 @@ export const InvoicesContent = observer(() => {
       } )=> {
         const total = rate! * trackedHours
         
-        return `${position}: €${rate} * ${trackedHours}h = €${formatThousands({
-          value:total,
-        })}`
+        return `${position}: €${rate} * ${trackedHours}h = €${formatThousands(total)}`
       })
-      .join(`\n`) + `\nTotal: €${formatThousands({
-      value:totalAmount,
-    })}`
+      .join(`\n`) + `\nTotal: €${formatThousands(totalAmount!)}`
 
     navigator.clipboard.writeText(invoiceText)
   }
@@ -141,12 +137,8 @@ export const InvoicesContent = observer(() => {
           {
             id: `Total`,
             header: `Total (€)`,
-            accessorFn: (row) => formatThousands({
-              value:row.total,
-            }),
-            footer: () => formatThousands({
-              value:totalAmount,
-            }) || `-`,
+            accessorFn: (row) => row.total ? formatThousands(row.total) : ``,
+            footer: () => totalAmount ? formatThousands(totalAmount) : `-`,
           },  
         ]}
         tcOrder={{
