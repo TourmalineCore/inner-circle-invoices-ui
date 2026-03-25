@@ -51,14 +51,14 @@ export const InvoicesContainer = observer(() => {
   }) {
     const {
       data: {
-        employeesEntries,
+        employeesTrackedTaskHours,
       },
     } = await api.get<InvoicesApiResponse>(
       `/api/invoices/employees-entries-by-project-and-period?projectId=${projectId}&month=${invoicesState.monthYearDate.month}&year=${invoicesState.monthYearDate.year}`,
     )
 
     invoicesState.initializeInvoicesData({
-      invoicesData: employeesEntries,
+      invoicesData: employeesTrackedTaskHours,
     })
   }
 })

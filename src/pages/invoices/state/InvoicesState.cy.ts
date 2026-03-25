@@ -38,7 +38,7 @@ function totalHoursTests() {
   `, () => {
     const mockInvoicesData = [
       {
-        id: 1,
+        employeeId: 1,
         name: `John Doe`,
         position: `developer`,
         trackedHours: 40,
@@ -46,7 +46,7 @@ function totalHoursTests() {
         total: 2000,
       },
       {
-        id: 2,
+        employeeId: 2,
         name: `Jane Doe`,
         position: `designer`,
         trackedHours: 10,
@@ -79,14 +79,14 @@ function totalAmountTests() {
   `, () => {
     const mockInvoicesData = [
       {
-        id: 1,
+        employeeId: 1,
         name: `John Doe`,
         position: `Developer`,
         trackedHours: 40,
         rate: 50,
       },
       {
-        id: 2,
+        employeeId: 2,
         name: `Jane Smith`,
         position: `Designer`,
         trackedHours: 10,
@@ -110,14 +110,14 @@ function totalAmountTests() {
   `, () => {
     const mockInvoicesData = [
       {
-        id: 1,
+        employeeId: 1,
         name: `John Doe`,
         position: `developer`,
         trackedHours: 40,
         rate: 50,
       },
       {
-        id: 2,
+        employeeId: 2,
         name: `Jane Doe`,
         position: `designer`,
         trackedHours: 45,
@@ -162,8 +162,7 @@ function selectProjectTests() {
     
     expect(invoicesState.selectedProjectId)
       .to
-      .be
-      .null
+      .equal(``)
 
     invoicesState.setSelectedProjectId({
       projectId: 1, 

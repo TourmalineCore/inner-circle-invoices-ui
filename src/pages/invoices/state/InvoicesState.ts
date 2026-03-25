@@ -54,15 +54,15 @@ export class InvoicesState {
 
   get totalTrackedHours() {
     return this._invoicesData.reduce((sum, invoice) => {
-      const hours = invoice.trackedHours
-      return sum + (isNaN(hours) ? 0 : hours)
+      return sum + invoice.trackedHours
     }, 0)
   }
 
   get isAllRateFieldsFilled() {
     return this._invoicesData.every((invoice) => 
       invoice.rate !== null &&
-      invoice.rate !== undefined, 
+      invoice.rate !== undefined &&
+      !isNaN(invoice.rate),
     )
   }
 
@@ -85,13 +85,13 @@ export class InvoicesState {
   }
   
   setPosition({
-    id,
+    employeeId,
     position,
   }: {
-    id: number,
+    employeeId: number,
     position: string,
   }) {
-    const invoice = this._invoicesData.find((item) => item.id == id)
+    const invoice = this._invoicesData.find((item) => item.employeeId == employeeId)
 
     if (invoice) {
       invoice.position = position
@@ -99,13 +99,13 @@ export class InvoicesState {
   }
 
   setRate({
-    id,
+    employeeId,
     rate,
   }: {
-    id: number,
+    employeeId: number,
     rate: number,
   }) {
-    const invoice = this._invoicesData.find((item) => item.id == id)
+    const invoice = this._invoicesData.find((item) => item.employeeId == employeeId)
 
     if (invoice) {
       invoice.rate = rate

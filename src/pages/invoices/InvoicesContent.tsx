@@ -39,40 +39,36 @@ export const InvoicesContent = observer(() => {
   return (
     <div className='invoices'>
       <div className='invoices__head'>
-        {
-          invoicesState.projects.length > 0 && (
-            <select
-              className='invoices__project-select'
-              name='project'
-              data-cy="project-select"
-              value={selectedProjectId}
-              onChange={(e) => {
-                invoicesState.setSelectedProjectId({ 
-                  projectId: Number(e.target.value), 
-                })
-              }}
-            >
-              <option
-                className='invoices__empty-project-option'
-                value=""
-              >
+        <select
+          className='invoices__project-select'
+          name='project'
+          data-cy="project-select"
+          value={selectedProjectId}
+          onChange={(e) => {
+            invoicesState.setSelectedProjectId({ 
+              projectId: Number(e.target.value), 
+            })
+          }}
+        >
+          <option
+            className='invoices__empty-project-option'
+            value=""
+          >
                 Choose project
-              </option>
-              {invoicesState.projects.map(({
-                id,
-                name,
-              }) => (
-                <option
-                  data-cy="projects-select-option"
-                  key={id}
-                  value={id}
-                >
-                  {name}
-                </option>
-              ))}
-            </select>
-          )
-        }
+          </option>
+          {invoicesState.projects.map(({
+            id,
+            name,
+          }) => (
+            <option
+              data-cy="projects-select-option"
+              key={id}
+              value={id}
+            >
+              {name}
+            </option>
+          ))}
+        </select>
         <DatePicker 
           selectedDate={selectedDate}
           onChange={(date) => {
@@ -98,10 +94,10 @@ export const InvoicesContent = observer(() => {
             cell: ({
               row,
             }) => <input
-              data-cy={`invoices-position-input-${row.original.id}`}
+              data-cy={`invoices-position-input-${row.original.employeeId}`}
               defaultValue={row.original.position}
               onBlur={(e) => invoicesState.setPosition({
-                id: row.original.id,
+                employeeId: row.original.employeeId,
                 position: e.target.value,
               })}
             />,
@@ -119,11 +115,11 @@ export const InvoicesContent = observer(() => {
               row,
             }) => <input
               type='number'
-              data-cy={`invoices-rate-input-${row.original.id}`}
+              data-cy={`invoices-rate-input-${row.original.employeeId}`}
               defaultValue={row.original.rate}
               onBlur={(e) => {
                 invoicesState.setRate({
-                  id: row.original.id,
+                  employeeId: row.original.employeeId,
                   rate: e.target.valueAsNumber,
                 })
               }}

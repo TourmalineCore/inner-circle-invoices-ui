@@ -16,14 +16,14 @@ const PROJECTS = {
 }
 
 const INVOICE_DATA = {
-  employeesEntries: [
+  employeesTrackedTaskHours: [
     {
-      id: 1,
+      employeeId: 1,
       name: `John Doe`,
       trackedHours: 160,
     },
     {
-      id: 2,
+      employeeId: 2,
       name: `Jane Doe`,
       trackedHours: 80,
     },
