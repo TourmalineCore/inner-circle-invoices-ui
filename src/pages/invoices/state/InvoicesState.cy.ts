@@ -25,6 +25,10 @@ function totalHoursTests() {
     expect(invoicesState.totalTrackedHours)
       .to
       .equal(0)
+
+    expect(invoicesState.totalAmount)
+      .to
+      .equal(0)
   })
 
   it(`
@@ -100,18 +104,6 @@ function totalAmountTests() {
   })
 
   it(`
-  GIVEN an empty invoices array
-  WHEN calculating total amount
-  SHOULD return 0
-  `, () => {
-    invoicesState.initializeInvoicesData({
-      invoicesData: [],
-    })
-
-    expect(invoicesState.totalAmount).to.equal(0)
-  })
-
-  it(`
   GIVEN not all rates are filled
   WHEN calculating total amount
   SHOULD return null
@@ -129,7 +121,6 @@ function totalAmountTests() {
         name: `Jane Doe`,
         position: `designer`,
         trackedHours: 45,
-        rate: undefined,
       },
     ]
 
