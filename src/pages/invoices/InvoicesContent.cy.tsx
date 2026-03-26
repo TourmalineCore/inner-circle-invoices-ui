@@ -68,6 +68,7 @@ function copyToClipboardTests() {
           position: `Developer`,
           trackedHours: 160,
           rate: 50,
+          total: 8000,
         },
         {
           employeeId: 2,
@@ -75,6 +76,7 @@ function copyToClipboardTests() {
           position: `Designer`,
           trackedHours: 80,
           rate: 45,
+          total: 3600,
         },
       ],
     })
@@ -114,6 +116,7 @@ function copyButtonTextTests() {
           position: `Developer`,
           trackedHours: 160,
           rate: 50,
+          total: 8000,
         },
       ],
     })
