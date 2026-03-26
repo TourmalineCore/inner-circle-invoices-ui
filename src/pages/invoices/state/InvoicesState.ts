@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { InvoiceData, ProjectDto } from '../types'
+import { formatToTwoDecimalPlaces } from '../../../common/utils/formatToTwoDecimalPlaces'
 
 export const UNSPECIFIED_PROJECT_ID = 0
 
@@ -18,7 +19,10 @@ export class InvoicesState {
   }: {
     invoicesData: InvoiceData[],
   }) {
-    this._invoicesData = invoicesData
+    this._invoicesData = invoicesData.map((item) => ({
+      ...item,
+      trackedHours: formatToTwoDecimalPlaces(item.trackedHours),
+    }))
   }
 
   initializeProjects({
@@ -56,7 +60,7 @@ export class InvoicesState {
 
   get totalTrackedHours() {
     return this._invoicesData.reduce((sum, invoice) => {
-      return sum + invoice.trackedHours
+      return formatToTwoDecimalPlaces(sum + invoice.trackedHours)
     }, 0)
   }
 
@@ -72,7 +76,7 @@ export class InvoicesState {
     }
     
     return this._invoicesData.reduce((sum, invoice) => {
-      return sum + (invoice.rate! * invoice.trackedHours)
+      return formatToTwoDecimalPlaces(sum + (invoice.rate! * invoice.trackedHours))
     }, 0)
   }
   
@@ -111,7 +115,7 @@ export class InvoicesState {
       invoice.rate = rate
 
       invoice.total = rate 
-        ? rate * invoice.trackedHours
+        ? formatToTwoDecimalPlaces(rate * invoice.trackedHours)
         : null
       
       // trigger reload state
