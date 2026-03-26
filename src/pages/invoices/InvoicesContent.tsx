@@ -3,7 +3,7 @@ import './Invoices.scss'
 
 import { observer } from "mobx-react-lite"
 import { ClientTable } from '@tourmalinecore/react-table-responsive'
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { InvoiceData } from "./types"
 import { DatePicker } from '../../components/DatePicker/DatePicker'
@@ -23,6 +23,11 @@ export const InvoicesContent = observer(() => {
     projects,
   } = invoicesState
 
+  const [
+    isCopied,
+    setIsCopied,
+  ] = useState(false)
+
   const handleCopyAsText = () => {
     const invoiceText = invoicesData
       .map(({
@@ -37,6 +42,12 @@ export const InvoicesContent = observer(() => {
       .join(`\n`) + `\nTotal: €${formatThousands(totalAmount!)}`
 
     navigator.clipboard.writeText(invoiceText)
+
+    setIsCopied(true)
+    
+    setTimeout(() => {
+      setIsCopied(false)
+    }, 2000)
   }
 
   const isTotalAmountFilled = totalAmount !== null
@@ -152,7 +163,7 @@ export const InvoicesContent = observer(() => {
         className='invoices__copy-button'
         title={!isTotalAmountFilled ? `Fill in all rates to enable copying` : `Copy as text`}
       >
-        Copy as Text
+        {isCopied ? `Copied!` : `Copy as Text`}
       </button>
     </div>
   )
