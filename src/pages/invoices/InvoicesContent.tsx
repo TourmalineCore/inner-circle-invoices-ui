@@ -8,6 +8,7 @@ import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { InvoiceData } from "./types"
 import { DatePicker } from '../../components/DatePicker/DatePicker'
 import { formatThousands } from '../../common/utils/formatThousands'
+import { UNSPECIFIED_PROJECT_ID } from './state/InvoicesState'
 
 export const InvoicesContent = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
@@ -53,7 +54,7 @@ export const InvoicesContent = observer(() => {
         >
           <option
             className='invoices__empty-project-option'
-            value=""
+            value={UNSPECIFIED_PROJECT_ID}
           >
             Choose project
           </option>
