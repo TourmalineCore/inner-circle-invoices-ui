@@ -75,7 +75,8 @@ function initializationTests() {
     ) 
       .as(`getInvoices`)
 
-    cy.getByData(`project-select`)
+    cy
+      .getByData(`project-select`)
       .select(`1`)
 
     cy.wait(`@getInvoices`)
@@ -137,7 +138,7 @@ function projectsTests() {
 
 function monthChangeTests() {
   it(`
-  GIVEN datepicker
+  GIVEN date picker
   WHEN user changes the month
   SHOULD update selected month and send request with this month
   `, () => {

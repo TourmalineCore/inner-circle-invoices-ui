@@ -13,14 +13,14 @@ function canCopyTests() {
   it(`
   GIVEN invoices table 
   WHEN total amount is not calculated
-  SHOULD disable Copy as Text button
+  SHOULD disable "Copy as Text" button
   `, () => {
     mountComponent({
       invoicesDataForInitialize: [
         {
           employeeId: 1,
           name: `John Doe`,
-          position: `developer`,
+          position: `Developer`,
           trackedHours: 40,
         },
       ],
@@ -41,7 +41,7 @@ function canCopyTests() {
         {
           employeeId: 1,
           name: `John Doe`,
-          position: `developer`,
+          position: `Developer`,
           trackedHours: 40,
           rate: 50,
         },

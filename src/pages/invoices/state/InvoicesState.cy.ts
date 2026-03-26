@@ -40,7 +40,7 @@ function totalHoursTests() {
       {
         employeeId: 1,
         name: `John Doe`,
-        position: `developer`,
+        position: `Developer`,
         trackedHours: 40,
         rate: 50,
         total: 2000,
@@ -48,7 +48,7 @@ function totalHoursTests() {
       {
         employeeId: 2,
         name: `Jane Doe`,
-        position: `designer`,
+        position: `Designer`,
         trackedHours: 10,
         rate: 45,
         total: 450,
@@ -112,14 +112,14 @@ function totalAmountTests() {
       {
         employeeId: 1,
         name: `John Doe`,
-        position: `developer`,
+        position: `Developer`,
         trackedHours: 40,
         rate: 50,
       },
       {
         employeeId: 2,
         name: `Jane Doe`,
-        position: `designer`,
+        position: `Designer`,
         trackedHours: 45,
       },
     ]
