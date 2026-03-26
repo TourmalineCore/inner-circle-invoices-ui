@@ -33,6 +33,11 @@ describe(`InvoicesContainer`, () => {
   beforeEach(() => {
     cy.viewport(1024, 600)
 
+    // set cypress default date
+    cy.clock(new Date(2026, 3, 26), [
+      `Date`,
+    ])
+
     cy.intercept(
       `GET`,
       `*/invoices/projects`,
