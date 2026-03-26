@@ -147,9 +147,9 @@ export const InvoicesContent = observer(() => {
         type="button"
         data-cy="invoices-copy-button"
         onClick={handleCopyAsText}
-        disabled={isTotalAmountFilled}
+        disabled={!isTotalAmountFilled}
         className='invoices__copy-button'
-        title={isTotalAmountFilled ? `Fill in all rates to enable copying` : `Copy as text`}
+        title={!isTotalAmountFilled ? `Fill in all rates to enable copying` : `Copy as text`}
       >
         Copy as Text
       </button>
