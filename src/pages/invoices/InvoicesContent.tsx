@@ -38,6 +38,8 @@ export const InvoicesContent = observer(() => {
     navigator.clipboard.writeText(invoiceText)
   }
 
+  const isTotalAmountFilled = totalAmount !== null
+
   return (
     <div className='invoices'>
       <div className='invoices__head'>
@@ -145,9 +147,9 @@ export const InvoicesContent = observer(() => {
         type="button"
         data-cy="invoices-copy-button"
         onClick={handleCopyAsText}
-        disabled={totalAmount === null}
+        disabled={isTotalAmountFilled}
         className='invoices__copy-button'
-        title={totalAmount === null ? `Fill in all rates to enable copying` : `Copy as text`}
+        title={isTotalAmountFilled ? `Fill in all rates to enable copying` : `Copy as text`}
       >
         Copy as Text
       </button>
