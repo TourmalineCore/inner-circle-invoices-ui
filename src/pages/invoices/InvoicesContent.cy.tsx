@@ -6,6 +6,7 @@ import { InvoiceData } from "./types"
 describe(`InvoicesContent`, () => {
   describe(`Can Copy`, canCopyTests)
   describe(`Copy Functionality`, copyToClipboardTests)
+  describe(`Copy Button Text`, copyButtonTextTests)
 })
 
 function canCopyTests() {
@@ -96,6 +97,46 @@ function copyToClipboardTests() {
         `have.been.calledOnceWith`,
         `Developer: €50 * 160h = €8 000\nDesigner: €45 * 80h = €3 600\nTotal: €11 600`,
       )
+  })
+}
+
+function copyButtonTextTests() {
+  it(`
+  GIVEN all rates are filled
+  WHEN click "Copy as Text" button
+  SHOULD change button text to "Copied"
+  `, () => {
+    mountComponent({
+      invoicesDataForInitialize: [
+        {
+          employeeId: 1,
+          name: `John Doe`,
+          position: `Developer`,
+          trackedHours: 160,
+          rate: 50,
+        },
+      ],
+    })
+
+    cy
+      .getByData(`invoices-copy-button`)
+      .contains(`Copy as Text`)
+
+    cy
+      .getByData(`invoices-copy-button`)
+      .click()
+
+    cy
+      .getByData(`invoices-copy-button`)
+      .contains(`Copied`)
+
+    // need to check functionality of setTimeout for the button
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2000)
+
+    cy
+      .getByData(`invoices-copy-button`)
+      .contains(`Copy as Text`)
   })
 }
 
