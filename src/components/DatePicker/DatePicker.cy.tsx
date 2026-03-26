@@ -4,7 +4,7 @@ describe(`DatePicker`, () => {
   it(`
   GIVEN date picker component 
   WHEN mount
-  SHOULD render data picker component
+  SHOULD render date picker component
   `, () => {
     mountComponent()
 
