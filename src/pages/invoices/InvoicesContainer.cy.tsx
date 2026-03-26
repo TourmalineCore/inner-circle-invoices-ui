@@ -29,6 +29,7 @@ const INVOICE_DATA = {
     },
   ],
 }
+
 describe(`InvoicesContainer`, () => {
   beforeEach(() => {
     cy.viewport(1024, 600)
@@ -57,6 +58,7 @@ describe(`InvoicesContainer`, () => {
   describe(`Button Enable`, buttonEnableTests)
   describe(`Copy Functionality`, copyToClipboardTests)
   describe(`Projects`, projectsTests)
+  describe(`Month Change`, monthChangeTests)
 })
 
 function initializationTests() {
@@ -247,16 +249,54 @@ function projectsTests() {
   WHEN user selects a project
   SHOULD update selected project and send request with this project id
   `, () => {
+
+    cy.intercept(
+      `GET`,
+      `*/invoices/employees-entries-by-project-and-period?projectId=1&month=3&year=2026`,
+      {
+        statusCode: 200,
+        body: INVOICE_DATA, 
+      },
+    ) 
+      .as(`getInvoices`)
+
     cy
       .getByData(`project-select`)
       .select(`1`)
 
+    cy.wait(`@getInvoices`)
+  })
+}
+
+function monthChangeTests() {
+  it(`
+  GIVEN datepicker
+  WHEN user changes the month
+  SHOULD update selected month and send request with this month
+  `, () => {
     cy
-      .get(`@setSelectedProjectIdSpy`)
-      .should(`have.been.calledOnce`)
-      .and(`have.been.calledWith`, {
-        projectId: 1, 
-      })
+      .getByData(`project-select`)
+      .select(`1`)
+
+    cy.intercept(
+      `GET`,
+      `*/invoices/employees-entries-by-project-and-period?projectId=1&month=2&year=2026`,
+      {
+        statusCode: 200,
+        body: INVOICE_DATA, 
+      },
+    ) 
+      .as(`getInvoices`)
+    
+    cy
+      .getByData(`date-picker-select`)
+      .click()
+
+    cy
+      .contains(`Feb`)
+      .click()
+
+    cy.wait(`@getInvoices`)
   })
 }
 
