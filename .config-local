@@ -1,2 +1,2 @@
-API_ROOT_URL:http://localhost:5508
+API_ROOT_URL:http://localhost:5508/api/invoices
 AUTH_API_ROOT_URL:http://localhost:5002/api/auth
