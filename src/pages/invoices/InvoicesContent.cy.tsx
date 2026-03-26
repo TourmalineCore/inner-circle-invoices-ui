@@ -132,7 +132,7 @@ function copyButtonTextTests() {
 
     // need to check functionality of setTimeout for the button
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000)
+    cy.wait(1000)
 
     cy
       .getByData(`invoices-copy-button`)

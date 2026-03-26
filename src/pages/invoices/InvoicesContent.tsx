@@ -47,7 +47,7 @@ export const InvoicesContent = observer(() => {
     
     setTimeout(() => {
       setIsCopied(false)
-    }, 2000)
+    }, 1000)
   }
 
   const isTotalAmountFilled = totalAmount !== null
