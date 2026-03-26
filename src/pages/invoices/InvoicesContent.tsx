@@ -9,6 +9,7 @@ import { InvoiceData } from "./types"
 import { DatePicker } from '../../components/DatePicker/DatePicker'
 import { formatThousands } from '../../common/utils/formatThousands'
 import { UNSPECIFIED_PROJECT_ID } from './state/InvoicesState'
+import { formatToTwoDecimalPlaces } from '../../common/utils/formatToTwoDecimalPlaces'
 
 export const InvoicesContent = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
@@ -109,8 +110,8 @@ export const InvoicesContent = observer(() => {
           {
             id: `Tracked Hours`,
             header: `Tracked Hours`,
-            accessorFn: (row) => row.trackedHours,
-            footer: () => `${totalTrackedHours} hours`,
+            accessorFn: (row) => formatToTwoDecimalPlaces(row.trackedHours),
+            footer: () => `${formatToTwoDecimalPlaces(totalTrackedHours)} hours`,
           },
           {
             id: `Rate`,
@@ -133,8 +134,8 @@ export const InvoicesContent = observer(() => {
           {
             id: `Total`,
             header: `Total (€)`,
-            accessorFn: (row) => row.total ? formatThousands(row.total) : ``,
-            footer: () => totalAmount ? formatThousands(totalAmount) : `-`,
+            accessorFn: (row) => row.total ? formatThousands(formatToTwoDecimalPlaces(row.total)) : ``,
+            footer: () => totalAmount ? formatThousands(formatToTwoDecimalPlaces(totalAmount)) : `-`,
           },  
         ]}
         tcOrder={{
