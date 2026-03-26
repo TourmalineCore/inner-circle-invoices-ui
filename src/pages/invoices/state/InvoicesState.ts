@@ -60,16 +60,14 @@ export class InvoicesState {
     }, 0)
   }
 
-  get isAllRateFieldsFilled() {
-    return this._invoicesData.every((invoice) => 
-      invoice.rate !== null &&
+  get totalAmount() {
+    const allRatesValid = this._invoicesData.every((invoice) => 
+      invoice.rate != null &&
       invoice.rate !== undefined &&
       !isNaN(invoice.rate),
     )
-  }
-
-  get totalAmount() {
-    if (!this.isAllRateFieldsFilled) {
+  
+    if (!allRatesValid) {
       return null
     }
     
