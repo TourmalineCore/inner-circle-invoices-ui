@@ -75,9 +75,11 @@ export class InvoicesState {
       return null
     }
     
-    return this._invoicesData.reduce((sum, invoice) => {
-      return formatToTwoDecimalPlaces(sum + (invoice.rate! * invoice.trackedHours))
+    const totalAmount = this._invoicesData.reduce((sum, invoice) => {
+      return sum + (invoice.rate! * invoice.trackedHours)
     }, 0)
+
+    return formatToTwoDecimalPlaces(totalAmount)
   }
   
   setSelectedProjectId({

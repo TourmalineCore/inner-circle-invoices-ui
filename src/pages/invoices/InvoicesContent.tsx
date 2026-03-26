@@ -33,10 +33,9 @@ export const InvoicesContent = observer(() => {
         position,
         rate,
         trackedHours,
+        total,
       } )=> {
-        const total = rate! * trackedHours
-        
-        return `${position}: €${rate} * ${trackedHours}h = €${formatThousands(total)}`
+        return `${position || `-`}: €${rate} * ${trackedHours}h = €${formatThousands(total!)}`
       })
       .join(`\n`) + `\nTotal: €${formatThousands(totalAmount!)}`
 
