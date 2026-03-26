@@ -1,4 +1,4 @@
-import { InvoicesState } from "./InvoicesState"
+import { InvoicesState, UNSPECIFIED_PROJECT_ID } from "./InvoicesState"
 
 describe(`InvoicesState`, () => {
   describe(`Total Hours`, totalHoursTests)
@@ -162,7 +162,7 @@ function selectProjectTests() {
     
     expect(invoicesState.selectedProjectId)
       .to
-      .equal(``)
+      .equal(UNSPECIFIED_PROJECT_ID)
 
     invoicesState.setSelectedProjectId({
       projectId: 1, 

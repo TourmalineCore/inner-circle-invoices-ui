@@ -4,6 +4,7 @@ import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { api } from "../../common/api/api"
 import { InvoicesApiResponse, ProjectsApiResponse } from "./types"
 import { observer } from "mobx-react-lite"
+import { UNSPECIFIED_PROJECT_ID } from "./state/InvoicesState"
 
 export const InvoicesContainer = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
@@ -13,7 +14,7 @@ export const InvoicesContainer = observer(() => {
   }, [])
 
   useEffect(() => {
-    if (invoicesState.selectedProjectId !== ``) {
+    if (invoicesState.selectedProjectId !== UNSPECIFIED_PROJECT_ID) {
       loadInvoicesDataForProjectAsync({ 
         projectId: invoicesState.selectedProjectId, 
       })

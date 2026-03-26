@@ -1,11 +1,13 @@
 import { makeAutoObservable } from 'mobx'
 import { InvoiceData, ProjectDto } from '../types'
 
+export const UNSPECIFIED_PROJECT_ID = 0
+
 export class InvoicesState {
   private _invoicesData: InvoiceData[] = [] 
   private _selectedDate: Date = new Date()
   private _projects: ProjectDto[] = []
-  private _selectedProjectId: number | `` = `` 
+  private _selectedProjectId: number = UNSPECIFIED_PROJECT_ID 
 
   constructor() {
     makeAutoObservable(this)
