@@ -16,7 +16,7 @@ export const InvoicesContent = observer(() => {
 
   const {
     invoicesData,
-    selectedMonth,
+    selectedDate,
     selectedProjectId,
     totalTrackedHours,
     totalAmount,
@@ -86,7 +86,7 @@ export const InvoicesContent = observer(() => {
           ))}
         </select>
         <DatePicker 
-          selectedDate={selectedMonth}
+          selectedDate={selectedDate}
           onChange={(date) => {
             invoicesState.setSelectedDate({
               newDate: date,
