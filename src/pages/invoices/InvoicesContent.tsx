@@ -109,6 +109,7 @@ export const InvoicesContent = observer(() => {
             cell: ({
               row,
             }) => <input
+              className='invoices__input'
               data-cy={`invoices-position-input-${row.original.employeeId}`}
               defaultValue={row.original.position}
               onBlur={(e) => invoicesState.setPosition({
@@ -130,6 +131,7 @@ export const InvoicesContent = observer(() => {
               row,
             }) => <input
               type='number'
+              className='invoices__input'
               data-cy={`invoices-rate-input-${row.original.employeeId}`}
               defaultValue={row.original.rate}
               onBlur={(e) => {

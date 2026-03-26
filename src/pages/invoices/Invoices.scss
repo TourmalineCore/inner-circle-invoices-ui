@@ -29,11 +29,15 @@
     line-height: 1.25;
     background-color: #fff;
 
-    @include tablet-xl {
+    @include tablet {
       margin-left: auto;
       padding: 8px 16px;
       min-width: 130px;
     }
+  }
+
+  &__input {
+    width: 100%;
   }
 
   &__empty-project-option {
