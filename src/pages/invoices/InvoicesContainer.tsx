@@ -33,7 +33,7 @@ export const InvoicesContainer = observer(() => {
       data: {
         projects,
       },
-    } = await api.get<ProjectsApiResponse>(`/projects`)
+    } = await api.get<ProjectsApiResponse>(`/invoices/projects`)
 
     invoicesState.initializeProjects({
       projects,
@@ -50,7 +50,7 @@ export const InvoicesContainer = observer(() => {
         employeesTrackedTaskHours,
       },
     } = await api.get<InvoicesApiResponse>(
-      `/employees-entries-by-project-and-period?projectId=${projectId}&month=${invoicesState.monthYearDate.month}&year=${invoicesState.monthYearDate.year}`,
+      `/invoices/employees-entries-by-project-and-period?projectId=${projectId}&month=${invoicesState.monthYearDate.month}&year=${invoicesState.monthYearDate.year}`,
     )
 
     invoicesState.initializeInvoicesData({
