@@ -9,23 +9,34 @@ import { UNSPECIFIED_PROJECT_ID } from "./state/InvoicesState"
 export const InvoicesContainer = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
   
+  const {
+    monthYearDate,
+    selectedProjectId,
+    selectedDate, 
+  } = invoicesState
+
+  const {
+    month,
+    year,
+  } = monthYearDate
+  
   useEffect(() => {
     loadProjectsDataAsync()
   }, [])
 
   useEffect(() => {
-    if (invoicesState.selectedProjectId !== UNSPECIFIED_PROJECT_ID) {
+    if (selectedProjectId !== UNSPECIFIED_PROJECT_ID) {
       loadInvoicesDataForProjectAsync({ 
-        projectId: invoicesState.selectedProjectId, 
+        projectId: selectedProjectId, 
       })
     }
   }, [
-    invoicesState.selectedProjectId,
-    invoicesState.selectedDate,
+    selectedProjectId,
+    selectedDate,
   ])
 
   return (
-    <InvoicesContent/>
+    <InvoicesContent />
   )
 
   async function loadProjectsDataAsync() {
@@ -50,7 +61,7 @@ export const InvoicesContainer = observer(() => {
         employeesTrackedTaskHours,
       },
     } = await api.get<InvoicesApiResponse>(
-      `/invoices/employees-entries-by-project-and-period?projectId=${projectId}&month=${invoicesState.monthYearDate.month}&year=${invoicesState.monthYearDate.year}`,
+      `/invoices/employees-entries-by-project-and-period?projectId=${projectId}&month=${month}&year=${year}`,
     )
 
     invoicesState.initializeInvoicesData({
