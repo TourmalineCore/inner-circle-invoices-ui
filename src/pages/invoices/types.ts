@@ -1,11 +1,3 @@
-export type InvoicesApiResponse = {
-  employeesTrackedTaskHours: InvoiceData[],
-}
-
-export type ProjectsApiResponse = {
-  projects: ProjectDto[],
-}
-
 export type InvoiceData = {
   employeeId: number,
   name: string,

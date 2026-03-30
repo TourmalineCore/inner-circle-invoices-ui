@@ -1,9 +1,23 @@
-import axios from 'axios'
-import { API_ROOT_URL } from '../config/config'
-import { initApiInterceptors } from './initApiInterceptors'
+import { Api } from "@tourmalinecore/inner-circle-invoices-api-js-client"
+import { API_ROOT_URL } from "../config/config"
+import { initApiInterceptors } from "./initApiInterceptors"
 
-export const api = axios.create({
+const apiClient = new Api({
   baseURL: API_ROOT_URL,
 })
 
-initApiInterceptors(api)
+initApiInterceptors(apiClient.instance)
+
+// keep it after the auth interceptors in initApiInterceptors so that it runs first (interceptors are invoked in a reverse registration order)
+apiClient.instance.interceptors.request.use((config: any) => {
+  // this is needed to correctly combine baseUrl like http://localhost:30090/api/time and url like /api/tracking/entries
+  // into a correct local/prod env URL like http://localhost:30090/api/time/tracking/entries
+  // otherwise we get http://localhost:30090/api/time/api/tracking/entries which doesn't work
+  config.url = config.url.replace(`/api`, ``)
+
+  return config
+}, 
+null,
+)
+
+export const api = apiClient.api

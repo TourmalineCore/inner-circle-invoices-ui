@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react"
 import { InvoicesContent } from "./InvoicesContent"
 import { InvoicesStateContext } from "./state/InvoicesStateContext"
 import { api } from "../../common/api/api"
-import { InvoicesApiResponse, ProjectsApiResponse } from "./types"
 import { observer } from "mobx-react-lite"
 import { UNSPECIFIED_PROJECT_ID } from "./state/InvoicesState"
 
@@ -44,7 +43,7 @@ export const InvoicesContainer = observer(() => {
       data: {
         projects,
       },
-    } = await api.get<ProjectsApiResponse>(`/invoices/projects`)
+    } = await api.invoicesGetAllProjects()
 
     invoicesState.initializeProjects({
       projects,
@@ -60,9 +59,11 @@ export const InvoicesContainer = observer(() => {
       data: {
         employeesTrackedTaskHours,
       },
-    } = await api.get<InvoicesApiResponse>(
-      `/invoices/employees-entries-by-project-and-period?projectId=${projectId}&month=${month}&year=${year}`,
-    )
+    } = await api.invoicesGetEmployeesTrackedTaskHours({
+      month,
+      year,
+      projectId,
+    })
 
     invoicesState.initializeInvoicesData({
       invoicesData: employeesTrackedTaskHours,

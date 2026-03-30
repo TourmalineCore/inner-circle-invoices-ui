@@ -67,7 +67,7 @@ function initializationTests() {
   `, () => {
     cy.intercept(
       `GET`,
-      `*/invoices/employees-entries-by-project-and-period?projectId=1&month=3&year=2026`,
+      `*/invoices/employees-tracked-task-hours?month=3&year=2026&projectId=1`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 
@@ -120,7 +120,7 @@ function projectsTests() {
 
     cy.intercept(
       `GET`,
-      `*/invoices/employees-entries-by-project-and-period?projectId=1&month=3&year=2026`,
+      `*/invoices/employees-tracked-task-hours?month=3&year=2026&projectId=1`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 
@@ -148,7 +148,7 @@ function monthChangeTests() {
 
     cy.intercept(
       `GET`,
-      `*/invoices/employees-entries-by-project-and-period?projectId=1&month=2&year=2026`,
+      `*/invoices/employees-tracked-task-hours?month=2&year=2026&projectId=1`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 
