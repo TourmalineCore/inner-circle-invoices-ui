@@ -48,10 +48,13 @@ export const InvoicesContent = observer(() => {
     }, 1000)
   }
 
-  const isTotalAmountFilled = totalAmount !== null
+  const isCopyButtonDisabled = totalAmount === null || invoicesData.length < 1
 
   return (
-    <div className='invoices'>
+    <div 
+      className='invoices'
+      data-cy='invoices'
+    >
       <div className='invoices__head'>
         <select
           className='invoices__project-select'
@@ -159,9 +162,9 @@ export const InvoicesContent = observer(() => {
         type="button"
         data-cy="invoices-copy-button"
         onClick={handleCopyAsText}
-        disabled={!isTotalAmountFilled}
+        disabled={isCopyButtonDisabled}
         className='invoices__copy-button'
-        title={!isTotalAmountFilled ? `Fill in all rates to enable copying` : `Copy as text`}
+        title={isCopyButtonDisabled ? `Fill in all rates to enable copying` : `Copy as text`}
       >
         {isCopied ? `Copied!` : `Copy as Text`}
       </button>

@@ -10,9 +10,9 @@ initApiInterceptors(apiClient.instance)
 
 // keep it after the auth interceptors in initApiInterceptors so that it runs first (interceptors are invoked in a reverse registration order)
 apiClient.instance.interceptors.request.use((config: any) => {
-  // this is needed to correctly combine baseUrl like http://localhost:30090/api/time and url like /api/tracking/entries
-  // into a correct local/prod env URL like http://localhost:30090/api/time/tracking/entries
-  // otherwise we get http://localhost:30090/api/time/api/tracking/entries which doesn't work
+  // this is needed to correctly combine baseUrl like http://localhost:30090/api/invoices and url like /api/invoices/projects
+  // into a correct local/prod env URL like http://localhost:30090/api/invoices/invoices/projects
+  // otherwise we get http://localhost:30090/api/invoices/api/projects which doesn't work
   config.url = config.url.replace(`/api`, ``)
 
   return config
