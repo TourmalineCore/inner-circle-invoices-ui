@@ -26,7 +26,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: TourmalineCore/inner-circle-local-env
-          ref: feature/add_invoices
 
       - name: Deploy Local Env to Kind k8s
         uses: devcontainers/ci@v0.3
