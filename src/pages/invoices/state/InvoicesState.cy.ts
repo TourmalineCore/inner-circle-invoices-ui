@@ -39,7 +39,7 @@ function totalHoursTests() {
     const mockInvoicesData = [
       {
         employeeId: 1,
-        name: `John Doe`,
+        fullName: `John Doe`,
         position: `Developer`,
         trackedHours: 40,
         rate: 50,
@@ -47,7 +47,7 @@ function totalHoursTests() {
       },
       {
         employeeId: 2,
-        name: `Jane Doe`,
+        fullName: `Jane Doe`,
         position: `Designer`,
         trackedHours: 10,
         rate: 45,
@@ -80,14 +80,14 @@ function totalAmountTests() {
     const mockInvoicesData = [
       {
         employeeId: 1,
-        name: `John Doe`,
+        fullName: `John Doe`,
         position: `Developer`,
         trackedHours: 40,
         rate: 50,
       },
       {
         employeeId: 2,
-        name: `Jane Smith`,
+        fullName: `Jane Smith`,
         position: `Designer`,
         trackedHours: 10,
         rate: 45,
@@ -111,14 +111,14 @@ function totalAmountTests() {
     const mockInvoicesData = [
       {
         employeeId: 1,
-        name: `John Doe`,
+        fullName: `John Doe`,
         position: `Developer`,
         trackedHours: 40,
         rate: 50,
       },
       {
         employeeId: 2,
-        name: `Jane Doe`,
+        fullName: `Jane Doe`,
         position: `Designer`,
         trackedHours: 45,
       },
