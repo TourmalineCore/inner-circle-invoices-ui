@@ -102,7 +102,7 @@ export const InvoicesContent = observer(() => {
           {
             id: `Name`,
             header: `Name`,
-            accessorFn: (row) => row.name,
+            accessorFn: (row) => row.fullName,
             footer: `Total`,
           },
           {
@@ -156,7 +156,7 @@ export const InvoicesContent = observer(() => {
           id: `Name`,
           desc: true,
         }}
-        tcRenderMobileTitle={(row) => row.original.name}
+        tcRenderMobileTitle={(row) => row.original.fullName}
       />
       <button
         type="button"

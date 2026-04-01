@@ -19,7 +19,7 @@ function canCopyTests() {
       invoicesDataForInitialize: [
         {
           employeeId: 1,
-          name: `John Doe`,
+          fullName: `John Doe`,
           position: `Developer`,
           trackedHours: 40,
         },
@@ -40,7 +40,7 @@ function canCopyTests() {
       invoicesDataForInitialize: [
         {
           employeeId: 1,
-          name: `John Doe`,
+          fullName: `John Doe`,
           position: `Developer`,
           trackedHours: 40,
           rate: 50,
@@ -64,7 +64,7 @@ function copyToClipboardTests() {
       invoicesDataForInitialize: [
         {
           employeeId: 1,
-          name: `John Doe`,
+          fullName: `John Doe`,
           position: `Developer`,
           trackedHours: 160,
           rate: 50,
@@ -72,7 +72,7 @@ function copyToClipboardTests() {
         },
         {
           employeeId: 2,
-          name: `Jane Doe`,
+          fullName: `Jane Doe`,
           position: `Designer`,
           trackedHours: 80,
           rate: 45,
@@ -112,7 +112,7 @@ function copyButtonTextTests() {
       invoicesDataForInitialize: [
         {
           employeeId: 1,
-          name: `John Doe`,
+          fullName: `John Doe`,
           position: `Developer`,
           trackedHours: 160,
           rate: 50,

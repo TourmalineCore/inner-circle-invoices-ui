@@ -19,12 +19,12 @@ const INVOICE_DATA = {
   employeesTrackedTaskHours: [
     {
       employeeId: 1,
-      name: `John Doe`,
+      fullName: `John Doe`,
       trackedHours: 160,
     },
     {
       employeeId: 2,
-      name: `Jane Doe`,
+      fullName: `Jane Doe`,
       trackedHours: 80,
     },
   ],
@@ -67,7 +67,7 @@ function initializationTests() {
   `, () => {
     cy.intercept(
       `GET`,
-      `*/invoices/employees-tracked-task-hours?month=3&year=2026&projectId=1`,
+      `*/invoices/employees-tracked-task-hours?month=4&year=2026&projectId=1`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 
@@ -120,7 +120,7 @@ function projectsTests() {
 
     cy.intercept(
       `GET`,
-      `*/invoices/employees-tracked-task-hours?month=3&year=2026&projectId=1`,
+      `*/invoices/employees-tracked-task-hours?month=4&year=2026&projectId=1`,
       {
         statusCode: 200,
         body: INVOICE_DATA, 

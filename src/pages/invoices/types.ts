@@ -1,6 +1,6 @@
 export type InvoiceData = {
   employeeId: number,
-  name: string,
+  fullName: string,
   position?: string,
   trackedHours: number,
   rate?: number,
