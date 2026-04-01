@@ -1,0 +1,46 @@
+@use "../../styles/media" as *;
+
+.invoices {
+  display: flex;
+  flex-direction: column;
+
+  &__head {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 20px;
+  }
+
+  &__project-select {
+    margin-right: 10px;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  &__copy-button {
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    background-color: #fff;
+
+    @include tablet {
+      margin-left: auto;
+      padding: 8px 16px;
+      min-width: 130px;
+    }
+  }
+
+  &__input {
+    width: 100%;
+  }
+
+  &__empty-project-option {
+    display: none;
+  }
+}

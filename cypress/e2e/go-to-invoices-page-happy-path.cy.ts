@@ -13,7 +13,7 @@ describe(`Go To Invoices Page Happy Path`, () => {
     InvoicesPage.visit()
 
     cy
-      .contains(`Invoices`)
+      .getByData(`invoices`)
       .should(`be.visible`)
   })
 })

@@ -24,6 +24,8 @@
   },
   "dependencies": {
     "@originjs/vite-plugin-federation": "^1.3.9",
+    "@tourmalinecore/inner-circle-invoices-api-js-client": "^1.1.0",
+    "@tourmalinecore/react-table-responsive": "^1.0.3",
     "@tourmalinecore/react-tc-auth": "^2.0.1",
     "axios": ">=1.8.2",
     "clsx": "^2.1.1",
