@@ -119,6 +119,7 @@ export const InvoicesContent = observer(() => {
                 position: e.target.value,
               })}
             />,
+            tcNoFooterColumn: true,
           },
           {
             id: `Tracked Hours`,
@@ -144,6 +145,7 @@ export const InvoicesContent = observer(() => {
               }}
               onKeyDown={preventInvalidNumberInput}
             />,
+            tcNoFooterColumn: true,
           },  
           {
             id: `Total`,
