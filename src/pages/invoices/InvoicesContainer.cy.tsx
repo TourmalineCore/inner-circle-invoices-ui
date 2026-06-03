@@ -34,11 +34,6 @@ describe(`InvoicesContainer`, () => {
   beforeEach(() => {
     cy.viewport(1024, 600)
 
-    // set cypress default date
-    cy.clock(new Date(2026, 3, 26), [
-      `Date`,
-    ])
-
     cy.intercept(
       `GET`,
       `*/invoices/projects`,
@@ -173,6 +168,12 @@ function mountComponent() {
   
   cy.spy(invoicesState, `setSelectedProjectId`)
     .as(`setSelectedProjectIdSpy`)
+
+  const testDate = new Date(2026, 3, 26)
+
+  invoicesState.setSelectedDate({
+    newDate: testDate, 
+  })
 
   cy.mount(
     <InvoicesStateContext.Provider value={invoicesState}>
