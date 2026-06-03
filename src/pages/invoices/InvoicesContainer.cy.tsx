@@ -169,10 +169,8 @@ function mountComponent() {
   cy.spy(invoicesState, `setSelectedProjectId`)
     .as(`setSelectedProjectIdSpy`)
 
-  const testDate = new Date(2026, 3, 26)
-
   invoicesState.setSelectedDate({
-    newDate: testDate, 
+    newDate: new Date(2026, 3, 26),
   })
 
   cy.mount(
