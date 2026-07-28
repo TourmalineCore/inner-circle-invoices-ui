@@ -27,7 +27,7 @@
     "@tourmalinecore/inner-circle-invoices-api-js-client": "^1.1.0",
     "@tourmalinecore/react-table-responsive": "^1.0.3",
     "@tourmalinecore/react-tc-auth": "^2.4.0",
-    "axios": "^1.16.1",
+    "axios": "^1.18.0",
     "clsx": "^2.1.1",
     "history": "^5.3.0",
     "jwt-decode": "^4.0.0",
