@@ -1,4 +1,4 @@
-import { RequireAccessToken } from './routes/authStateProvider/RequireAccessToken'
+import { authService } from './common/authService'
 import { getPageRoutes } from './routes/pageRoutes'
 // import Layout from remote app
 import Layout from 'inner_circle_layout_ui/layout'
@@ -6,8 +6,8 @@ import Layout from 'inner_circle_layout_ui/layout'
 // eslint-disable-next-line import/no-default-export
 export default function App() {
   return (
-    <RequireAccessToken>
+    <authService.RequireAccessToken>
       <Layout getPageRoutes={getPageRoutes} />
-    </RequireAccessToken>
+    </authService.RequireAccessToken>
   )
 }
