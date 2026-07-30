@@ -6,10 +6,9 @@ import App from './App'
 
 import { authService } from './common/authService'
 import { BrowserRouter } from 'react-router-dom'
-import { refreshTokenAndSubscribe } from './common/api/refreshByInterval'
 
 async function initApp() {
-  await refreshTokenAndSubscribe()
+  await authService.startPeriodicalAccessTokenRefresh()
 
   ReactDOM
     .createRoot(document.getElementById(`root`)!)
@@ -20,7 +19,7 @@ async function initApp() {
             <App />
           </BrowserRouter>
         </authService.AuthProvider>
-      </React.StrictMode >,
+      </React.StrictMode>,
     )
 }
 
