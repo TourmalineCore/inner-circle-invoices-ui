@@ -5,6 +5,7 @@ export type InvoiceData = {
   trackedHours: number,
   rate?: number,
   total?: number | null,
+  mergeToEmployeeId?: number | null,
 }
 
 export type ProjectDto = {

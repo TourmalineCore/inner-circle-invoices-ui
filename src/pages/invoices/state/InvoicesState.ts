@@ -59,13 +59,17 @@ export class InvoicesState {
   }
 
   get totalTrackedHours() {
-    return this._invoicesData.reduce((sum, invoice) => {
-      return formatToTwoDecimalPlaces(sum + invoice.trackedHours)
-    }, 0)
+    return this._invoicesData
+      .filter((invoice) => !invoice.mergeToEmployeeId)
+      .reduce((sum, invoice) => {
+        return formatToTwoDecimalPlaces(sum + invoice.trackedHours)
+      }, 0)
   }
 
   get totalAmount() {
-    const allRatesValid = this._invoicesData.every((invoice) => 
+    const validInvoices = this._invoicesData.filter((invoice) => !invoice.mergeToEmployeeId)
+    
+    const allRatesValid = validInvoices.every((invoice) => 
       invoice.rate != null &&
       invoice.rate !== undefined &&
       !isNaN(invoice.rate),
@@ -75,7 +79,7 @@ export class InvoicesState {
       return null
     }
     
-    const totalAmount = this._invoicesData.reduce((sum, invoice) => {
+    const totalAmount = validInvoices.reduce((sum, invoice) => {
       return sum + (invoice.rate! * invoice.trackedHours)
     }, 0)
 
@@ -133,5 +137,74 @@ export class InvoicesState {
     newDate: Date,
   }) {
     this._selectedDate = newDate
+  }
+
+  toggleMergeSelection({
+    targetEmployeeId,
+    employeeIdToMerge,
+  }: {
+    targetEmployeeId: number,
+    employeeIdToMerge: number,
+  }) {
+    if (targetEmployeeId === employeeIdToMerge) {
+      return
+    }
+
+    const targetEmployeeIndex = this._invoicesData.findIndex(
+      (item) => item.employeeId === targetEmployeeId,
+    )
+
+    const employeeToMergeIndex = this._invoicesData.findIndex(
+      (item) => item.employeeId === employeeIdToMerge,
+    )
+
+    const targetEmployeeInvoice = this._invoicesData[targetEmployeeIndex]
+    const employeeToMergeInvoice = this._invoicesData[employeeToMergeIndex]
+
+    if (!employeeToMergeInvoice.mergeToEmployeeId) {
+      const newTargetEmployeeTrackedHours = formatToTwoDecimalPlaces(
+        Number(targetEmployeeInvoice.trackedHours + Number(employeeToMergeInvoice.trackedHours)),
+      )
+
+      const newTargetEmployeeTotal = targetEmployeeInvoice.rate
+        ? formatToTwoDecimalPlaces(targetEmployeeInvoice.rate * Number(newTargetEmployeeTrackedHours))
+        : null
+
+      this._invoicesData[employeeToMergeIndex] = {
+        ...this._invoicesData[employeeToMergeIndex],
+        mergeToEmployeeId: targetEmployeeId,
+      }
+
+      this._invoicesData[targetEmployeeIndex] = {
+        ...this._invoicesData[targetEmployeeIndex],
+        trackedHours: newTargetEmployeeTrackedHours,
+        total: newTargetEmployeeTotal,
+      }
+    }
+    else {
+      const newTrackedHours = formatToTwoDecimalPlaces(
+        Number(targetEmployeeInvoice.trackedHours - Number(employeeToMergeInvoice.trackedHours)),
+      )
+
+      const newTotal = targetEmployeeInvoice.rate
+        ? formatToTwoDecimalPlaces(targetEmployeeInvoice.rate * Number(newTrackedHours))
+        : null
+
+      this._invoicesData[employeeToMergeIndex] = {
+        ...this._invoicesData[employeeToMergeIndex],
+        mergeToEmployeeId: null,
+      }
+
+      this._invoicesData[targetEmployeeIndex] = {
+        ...this._invoicesData[targetEmployeeIndex],
+        trackedHours: newTrackedHours,
+        total: newTotal,
+      }
+    }
+
+    // trigger reload state
+    this._invoicesData = [
+      ...this._invoicesData,
+    ]
   }
 }
