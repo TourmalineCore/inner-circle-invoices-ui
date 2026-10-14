@@ -9,6 +9,7 @@ import { InvoiceData } from "./types"
 import { DatePicker } from '../../components/DatePicker/DatePicker'
 import { formatThousands } from '../../common/utils/formatThousands'
 import { UNSPECIFIED_PROJECT_ID } from './state/InvoicesState'
+import { MultipleSelect } from '../../components/multiple-select/MultipleSelect'
 
 export const InvoicesContent = observer(() => {
   const invoicesState = useContext(InvoicesStateContext)
@@ -29,6 +30,7 @@ export const InvoicesContent = observer(() => {
 
   const handleCopyAsText = () => {
     const invoiceText = invoicesData
+      .filter((invoice) => !invoice.mergeToEmployeeId)
       .map(({
         position,
         rate,
@@ -49,6 +51,8 @@ export const InvoicesContent = observer(() => {
   }
 
   const isCopyButtonDisabled = totalAmount === null || invoicesData.length < 1
+
+  const invoicesDataWithoutMergedEmployees = invoicesData.filter((invoice) => !invoice.mergeToEmployeeId)
 
   return (
     <div 
@@ -97,7 +101,7 @@ export const InvoicesContent = observer(() => {
       </div>
       <ClientTable<InvoiceData>
         tableId="invoices-table"
-        data={invoicesData}
+        data={invoicesDataWithoutMergedEmployees}
         columns={[
           {
             id: `Name`,
@@ -124,8 +128,15 @@ export const InvoicesContent = observer(() => {
           {
             id: `Tracked Hours`,
             header: `Tracked Hours`,
-            accessorFn: (row) => row.trackedHours,
+            cell: ({
+              row,
+            }) => (
+              <span data-cy="invoices-tracked-hours">
+                {row.original.trackedHours}
+              </span>
+            ),
             footer: () => `${totalTrackedHours} hours`,
+            size: 80,
           },
           {
             id: `Rate`,
@@ -145,6 +156,8 @@ export const InvoicesContent = observer(() => {
               }}
               onKeyDown={preventInvalidNumberInput}
             />,
+            minSize: 40,
+            size: 40,
             tcNoFooterColumn: true,
           },  
           {
@@ -152,6 +165,74 @@ export const InvoicesContent = observer(() => {
             header: `Total (€)`,
             accessorFn: (row) => row.total ? formatThousands(row.total) : ``,
             footer: () => totalAmount ? formatThousands(totalAmount) : `-`,
+            minSize: 50,
+            size: 50,
+          },
+          {
+            id: `Merge`,
+            header: `Merge`,
+            size: 200,
+            cell: ({
+              row,
+            }) => {
+              const currentEmployeeId = row.original.employeeId
+
+              const otherEmployees = invoicesData.filter(
+                (invoice) => invoice.employeeId !== currentEmployeeId
+                && (!invoice.mergeToEmployeeId || invoice.mergeToEmployeeId === currentEmployeeId),
+              )
+
+              const selectedMergeIds = invoicesData
+                .filter((invoice) => invoice.mergeToEmployeeId === currentEmployeeId)
+                .map(({
+                  employeeId,
+                }) => employeeId)
+
+              const options = otherEmployees.map(({
+                employeeId,
+                fullName,
+              }) => ({
+                value: employeeId,
+                label: shortenName({
+                  fullName,
+                }),
+              }))
+
+              return (
+                <div className="invoices__merge-select-container">
+                  <MultipleSelect
+                    className="invoices__merge-select"
+                    placeholder="Merge into..."
+                    data-cy='invoices-merge-select'
+                    value={selectedMergeIds}
+                    options={options}
+                    onChange={(selectedOptions) => {
+                      const newSelectedIds = selectedOptions.map(({
+                        value, 
+                      }) => value as number)
+
+                      selectedMergeIds
+                        .filter((id) => !newSelectedIds.includes(id))
+                        .forEach((id) => {
+                          invoicesState.toggleMergeSelection({
+                            targetEmployeeId: currentEmployeeId,
+                            employeeIdToMerge: id,
+                          })
+                        })
+
+                      newSelectedIds
+                        .filter((id) => !selectedMergeIds.includes(id))
+                        .forEach((id) => {
+                          invoicesState.toggleMergeSelection({
+                            targetEmployeeId: currentEmployeeId,
+                            employeeIdToMerge: id,
+                          })
+                        })
+                    }}
+                  />
+                </div>
+              )
+            },
           },  
         ]}
         tcOrder={{
@@ -178,4 +259,19 @@ function preventInvalidNumberInput(e: React.KeyboardEvent<HTMLInputElement>) {
   if (e.key === `e` || e.key === `E` || e.key === `+` || e.key === `-`) {
     e.preventDefault()
   }
+}
+
+function shortenName({
+  fullName,
+}: {
+  fullName: string,
+}) {
+  const parts = fullName.trim()
+    .split(/\s+/)
+
+  if (parts.length < 2) {
+    return fullName
+  } 
+
+  return `${parts[0]} ${parts[1][0]}.`
 }

@@ -7,6 +7,7 @@ describe(`InvoicesContent`, () => {
   describe(`Can Copy`, canCopyTests)
   describe(`Copy Functionality`, copyToClipboardTests)
   describe(`Copy Button Text`, copyButtonTextTests)
+  describe(`Merge Employee's Hours `, mergeEmployeesHoursTest)
 })
 
 function canCopyTests() {
@@ -141,6 +142,95 @@ function copyButtonTextTests() {
       .getByData(`invoices-copy-button`)
       .contains(`Copy as Text`)
   })
+}
+
+function mergeEmployeesHoursTest() {
+  it(`
+  GIVEN invoice table with employees tracked hours
+  WHEN manager merges one employee's hours into another employee
+  THEN the hours should be summed up
+  AND the merged employee should be removed from the table
+  AND the invoice text should not contain the merged employee
+  `, () => {
+    mountComponent({
+      invoicesDataForInitialize: [
+        {
+          employeeId: 1,
+          fullName: `John Doe`,
+          trackedHours: 20,
+        },
+        {
+          employeeId: 2,
+          fullName: `Jane Doe`,
+          position: `Developer`,
+          trackedHours: 140,
+          rate: 20,
+        },
+        {
+          employeeId: 3,
+          fullName: `Ivan Ivanov`,
+          position: `Developer`,
+          trackedHours: 40,
+        },
+      ],
+    })
+
+    cy
+      .getByData(`invoices-merge-select`)
+      .eq(1)
+      .click()
+
+    cy
+      .contains(`John D.`)
+      .click()
+
+    cy
+      .getByData(`table-row`)
+      .should(`have.length`, 2)
+
+    cy
+      .getByData(`invoices-tracked-hours`)
+      .eq(0)
+      .should(`have.text`, 160)
+
+    cy
+      .getByData(`invoices-merge-select`)
+      .eq(0)
+      .click()
+
+    cy
+      .contains(`Ivan I.`)
+      .click()
+
+    cy
+      .getByData(`table-row`)
+      .should(`have.length`, 1)
+
+    cy
+      .getByData(`invoices-tracked-hours`)
+      .eq(0)
+      .should(`have.text`, 200)   
+
+    cy
+      .window()
+      .then((window) => {
+        cy.stub(window.navigator.clipboard, `writeText`)
+          .as(`copyToClipboard`)  
+          .resolves()
+      })
+
+    cy
+      .getByData(`invoices-copy-button`)
+      .click()
+
+    cy
+      .get(`@copyToClipboard`)
+      .should(
+        `have.been.calledOnceWith`,
+        `Developer: €20 * 200h = €4 000\nTotal: €4 000`,
+      )
+  },
+  )    
 }
 
 function mountComponent({
