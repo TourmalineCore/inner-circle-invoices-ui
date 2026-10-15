@@ -6,12 +6,12 @@
 
   &__head {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     margin-bottom: 20px;
+    gap: 10px;
   }
 
   &__project-select {
-    margin-right: 10px;
     border-radius: 10px;
     padding: 8px 16px;
     font-family: inherit;

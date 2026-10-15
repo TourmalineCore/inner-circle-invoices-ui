@@ -21,6 +21,9 @@ export const InvoicesContent = observer(() => {
     totalTrackedHours,
     totalAmount,
     projects,
+    contractNumber,
+    projectName,
+    isCopyButtonDisabled,
   } = invoicesState
 
   const [
@@ -41,7 +44,13 @@ export const InvoicesContent = observer(() => {
       })
       .join(`\n`) + `\nTotal: €${formatThousands(totalAmount!)}`
 
-    navigator.clipboard.writeText(invoiceText)
+    const monthName = selectedDate.toLocaleString(`en-EN`, {
+      month: `long`, 
+    })
+
+    const year = selectedDate.getFullYear()
+
+    navigator.clipboard.writeText(`${contractNumber}; ${monthName} ${year}; ${projectName};\n` + invoiceText)
 
     setIsCopied(true)
     
@@ -49,8 +58,6 @@ export const InvoicesContent = observer(() => {
       setIsCopied(false)
     }, 1000)
   }
-
-  const isCopyButtonDisabled = totalAmount === null || invoicesData.length < 1
 
   const invoicesDataWithoutMergedEmployees = invoicesData.filter((invoice) => !invoice.mergeToEmployeeId)
 
@@ -97,6 +104,24 @@ export const InvoicesContent = observer(() => {
               newDate: date,
             })
           }}
+        />
+
+        <input
+          className='invoices__project-name-input'
+          data-cy={`invoices-project-name-input`}
+          placeholder='Project name'
+          onChange={(e) => invoicesState.setProjectName({
+            projectName: e.target.value,
+          })}
+        />
+
+        <input
+          className='invoices__cotract-number-input'
+          data-cy={`invoices-contract-number-input`}
+          placeholder='Contract number'
+          onChange={(e) => invoicesState.setContractNumber({
+            contractNumber: e.target.value,
+          })}
         />
       </div>
       <ClientTable<InvoiceData>
@@ -247,7 +272,7 @@ export const InvoicesContent = observer(() => {
         onClick={handleCopyAsText}
         disabled={isCopyButtonDisabled}
         className='invoices__copy-button'
-        title={isCopyButtonDisabled ? `Fill in all rates to enable copying` : `Copy as text`}
+        title={isCopyButtonDisabled ? `Fill in all required fields to enable copying` : `Copy as text`}
       >
         {isCopied ? `Copied!` : `Copy as Text`}
       </button>

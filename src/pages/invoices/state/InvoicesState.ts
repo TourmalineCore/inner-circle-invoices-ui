@@ -9,6 +9,8 @@ export class InvoicesState {
   private _selectedDate = new Date()
   private _projects: ProjectDto[] = []
   private _selectedProjectId = UNSPECIFIED_PROJECT_ID 
+  private _projectName = ``
+  private _contractNumber = ``
 
   constructor() {
     makeAutoObservable(this)
@@ -49,6 +51,14 @@ export class InvoicesState {
     return this._selectedDate
   }
 
+  get projectName() {
+    return this._projectName
+  }
+
+  get contractNumber() {
+    return this._contractNumber
+  }
+
   get monthYearDate() {
     const month = this._selectedDate.getMonth() + 1
     const year = this._selectedDate.getFullYear()
@@ -56,6 +66,13 @@ export class InvoicesState {
       month,
       year,
     }
+  }
+
+  get isCopyButtonDisabled() {
+    return this.totalAmount === null
+          || this._invoicesData.length < 1
+          || this._projectName === ``
+          || this._contractNumber === ``
   }
 
   get totalTrackedHours() {
@@ -137,6 +154,22 @@ export class InvoicesState {
     newDate: Date,
   }) {
     this._selectedDate = newDate
+  }
+
+  setProjectName({
+    projectName,
+  }: {
+    projectName: string,
+  }) {
+    this._projectName = projectName
+  }
+
+  setContractNumber({
+    contractNumber,
+  }: {
+    contractNumber: string,
+  }) {
+    this._contractNumber = contractNumber
   }
 
   toggleMergeSelection({
