@@ -144,7 +144,6 @@ function copyButtonTextTests() {
   })
 }
 
-function mergeEmployeesHoursTest() {
 function mergeEmployeesHoursTests() {
   it(`
   GIVEN invoice table with employees tracked hours
