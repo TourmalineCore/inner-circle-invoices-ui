@@ -59,11 +59,11 @@ export class InvoicesState {
   }
 
   get totalTrackedHours() {
-    return this._invoicesData
+    const total = this._invoicesData
       .filter((invoice) => !invoice.mergeToEmployeeId)
-      .reduce((sum, invoice) => {
-        return formatToTwoDecimalPlaces(sum + invoice.trackedHours)
-      }, 0)
+      .reduce((sum, invoice) => sum + invoice.trackedHours, 0)
+    
+    return formatToTwoDecimalPlaces(total) 
   }
 
   get totalAmount() {
