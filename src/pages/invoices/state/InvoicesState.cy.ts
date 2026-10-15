@@ -217,8 +217,8 @@ function toggleMergeSelectionTests() {
 
   it(`
   GIVEN an invoices data with one employee
-  WHEN attempting to merge the employee's hours into themselves
-  SHOULD not set the mergeToEmployeeId field and not change tracked hours
+  WHEN merging one employee into another and then unmerging
+  SHOULD update tracked hours and mergeToEmployeeId correctly
   `, () => {
     const mockInvoicesData = [
       {
