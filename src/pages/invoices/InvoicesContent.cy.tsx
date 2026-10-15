@@ -7,7 +7,7 @@ describe(`InvoicesContent`, () => {
   describe(`Can Copy`, canCopyTests)
   describe(`Copy Functionality`, copyToClipboardTests)
   describe(`Copy Button Text`, copyButtonTextTests)
-  describe(`Merge Employee's Hours `, mergeEmployeesHoursTest)
+  describe(`Merge Employee's Hours `, mergeEmployeesHoursTests)
 })
 
 function canCopyTests() {
@@ -145,6 +145,7 @@ function copyButtonTextTests() {
 }
 
 function mergeEmployeesHoursTest() {
+function mergeEmployeesHoursTests() {
   it(`
   GIVEN invoice table with employees tracked hours
   WHEN manager merges one employee's hours into another employee
