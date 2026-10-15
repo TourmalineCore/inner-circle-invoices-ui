@@ -182,7 +182,7 @@ function toggleMergeSelectionTests() {
   })
 
   it(`
-  GIVEN an invoices table with one employee
+  GIVEN an invoices data with one employee
   WHEN attempting to merge the employee's hours into themselves
   SHOULD not set the mergeToEmployeeId field and not change tracked hours
   `, () => {
@@ -216,7 +216,7 @@ function toggleMergeSelectionTests() {
   })
 
   it(`
-  GIVEN an invoices table with one employee
+  GIVEN an invoices data with one employee
   WHEN attempting to merge the employee's hours into themselves
   SHOULD not set the mergeToEmployeeId field and not change tracked hours
   `, () => {
