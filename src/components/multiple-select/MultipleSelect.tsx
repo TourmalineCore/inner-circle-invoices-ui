@@ -69,7 +69,6 @@ export function MultipleSelect({
       className={`multiple-select ${className}`}
       ref={multipleSelectRef}
     >
-
       {label && (
         <label 
           className="multiple-select__label"
