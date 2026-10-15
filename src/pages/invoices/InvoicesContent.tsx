@@ -170,7 +170,7 @@ export const InvoicesContent = observer(() => {
           },
           {
             id: `Merge`,
-            header: `Merge`,
+            header: `Merge Hours`,
             size: 200,
             cell: ({
               row,
@@ -202,7 +202,7 @@ export const InvoicesContent = observer(() => {
                 <div className="invoices__merge-select-container">
                   <MultipleSelect
                     className="invoices__merge-select"
-                    placeholder="Merge into..."
+                    placeholder="Merge with"
                     data-cy='invoices-merge-select'
                     value={selectedMergeIds}
                     options={options}
