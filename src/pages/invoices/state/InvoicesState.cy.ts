@@ -4,7 +4,7 @@ describe(`InvoicesState`, () => {
   describe(`Total Hours`, totalHoursTests)
   describe(`Total Amount`, totalAmountTests)
   describe(`Select Project`, selectProjectTests)
-  describe(`Merge time`, mergeTimeTests)
+  describe(`Toggle Merge Selection`, toggleMergeSelectionTests)
 })
 
 function totalHoursTests() {
@@ -174,7 +174,7 @@ function selectProjectTests() {
   })
 }
 
-function mergeTimeTests() {
+function toggleMergeSelectionTests() {
   let invoicesState: InvoicesState
 
   beforeEach(() => {
@@ -183,7 +183,7 @@ function mergeTimeTests() {
 
   it(`
   GIVEN an invoices table with one employee
-  WHEN attempting to merge the employee's time into themselves
+  WHEN attempting to merge the employee's hours into themselves
   SHOULD not set the mergeToEmployeeId field and not change tracked hours
   `, () => {
     const mockInvoicesData = [
@@ -217,7 +217,7 @@ function mergeTimeTests() {
 
   it(`
   GIVEN an invoices table with one employee
-  WHEN attempting to merge the employee's time into themselves
+  WHEN attempting to merge the employee's hours into themselves
   SHOULD not set the mergeToEmployeeId field and not change tracked hours
   `, () => {
     const mockInvoicesData = [
