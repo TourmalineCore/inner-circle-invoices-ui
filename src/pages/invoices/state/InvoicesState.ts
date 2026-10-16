@@ -70,9 +70,9 @@ export class InvoicesState {
 
   get isCopyButtonDisabled() {
     return this.totalAmount === null
-        || this._invoicesData.length < 1
-        || this._projectName === ``
-        || this._contractNumber === ``
+      || this._invoicesData.length < 1
+      || this._projectName === ``
+      || this._contractNumber === ``
   }
 
   get totalTrackedHours() {
