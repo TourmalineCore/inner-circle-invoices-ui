@@ -217,7 +217,7 @@ function toggleMergeSelectionTests() {
   })
 
   it(`
-  GIVEN an invoices data with one employee
+  GIVEN an invoices data with two employees
   WHEN merging one employee into another and then unmerging
   SHOULD update tracked hours and mergeToEmployeeId correctly
   `, () => {

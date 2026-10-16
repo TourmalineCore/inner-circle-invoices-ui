@@ -161,7 +161,8 @@ function mergeEmployeesHoursTests() {
   it(`
   GIVEN invoice table with employees tracked hours
   WHEN manager merges one employee's hours into another employee
-  THEN the hours should be summed up
+  SHOULD the hours be summed up
+  AND the total amount should be calculated as summed hours multiplied by the rate of the target employee
   AND the merged employee should be removed from the table
   AND the invoice text should not contain the merged employee
   `, () => {
