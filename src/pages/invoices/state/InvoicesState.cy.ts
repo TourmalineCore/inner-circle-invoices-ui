@@ -322,7 +322,7 @@ function isCopyButtonDisabledTests() {
   it(`
   GIVEN an empty invoices data
   WHEN isCopyButtonDisabled is called
-  THEN should return true
+  SHOULD return true
   `, () => {
     invoicesState.initializeInvoicesData({
       invoicesData: [],
@@ -337,7 +337,7 @@ function isCopyButtonDisabledTests() {
   it(`
   GIVEN an invoices data with one employee
   WHEN rate is not filled
-  THEN isCopyButtonDisabled should return true
+  SHOULD return true
   `, () => {
     const mockInvoicesData = [
       {
@@ -361,7 +361,7 @@ function isCopyButtonDisabledTests() {
   it(`
   GIVEN an invoices data with one employee and a filled rate
   WHEN project name and contract number are not filled
-  THEN isCopyButtonDisabled should return true
+  SHOULD return true
   `, () => {
     const mockInvoicesData = [
       {
@@ -386,7 +386,7 @@ function isCopyButtonDisabledTests() {
   it(`
   GIVEN an invoices data with one employee and a filled rate
   WHEN only project name is filled
-  THEN isCopyButtonDisabled should return true
+  SHOULD return true
   `, () => {
     const mockInvoicesData = [
       {
@@ -415,7 +415,7 @@ function isCopyButtonDisabledTests() {
   it(`
   GIVEN an invoices data with one employee and a filled rate
   WHEN only contract number is filled
-  THEN isCopyButtonDisabled should return true
+  SHOULD return true
   `, () => {
     const mockInvoicesData = [
       {
@@ -444,7 +444,7 @@ function isCopyButtonDisabledTests() {
   it(`
   GIVEN an invoices data with one employee and a filled rate
   WHEN project name and contract number are filled
-  THEN isCopyButtonDisabled should return false
+  SHOULD return false
   `, () => {
     const mockInvoicesData = [
       {

@@ -257,7 +257,7 @@ function fillProjectNameInputTests() {
   it(`
   GIVEN invoices table
   WHEN a project name is typed
-  THEN invoices state projectName should be updated with the typed value
+  SHOULD invoices state projectName be updated with the typed value
   `, () => {
     const projectName = `Inner Circle`
     
@@ -291,7 +291,7 @@ function fillContractNumberInputTests() {
   it(`
   GIVEN invoices table
   WHEN a contract number is typed
-  THEN invoices state contractNumber should be updated with the typed value
+  SHOULD invoices state contractNumber be updated with the typed value
   `, () => {
     const contractNumber = `123`
 
