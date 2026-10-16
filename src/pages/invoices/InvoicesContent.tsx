@@ -169,7 +169,7 @@ export const InvoicesContent = observer(() => {
             size: 50,
           },
           {
-            id: `Merge`,
+            id: `Merge Hours`,
             header: `Merge Hours`,
             size: 200,
             cell: ({
