@@ -44,7 +44,7 @@ export const InvoicesContent = observer(() => {
       })
       .join(`\n`) + `\nTotal: €${formatThousands(totalAmount!)}`
 
-    const monthName = selectedDate.toLocaleString(`en-EN`, {
+    const monthName = selectedDate.toLocaleString(`en-US`, {
       month: `long`, 
     })
 
