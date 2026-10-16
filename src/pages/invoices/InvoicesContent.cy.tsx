@@ -112,6 +112,50 @@ function copyToClipboardTests() {
         `123; October 2026; ProjectOne;\nDeveloper: €50 * 160h = €8 000\nDesigner: €45 * 80h = €3 600\nTotal: €11 600`,
       )
   })
+
+  it(`
+  GIVEN contract number, project name and position contain leading/trailing spaces
+  WHEN "Copy as Text" button is clicked
+  SHOULD trim them in the copied text
+  `, () => {
+    cy.clock(new Date(2026, 9, 21), [
+      `Date`,
+    ])
+
+    mountComponent({
+      invoicesDataForInitialize: [
+        {
+          employeeId: 1,
+          fullName: `John Doe`,
+          position: `   Developer   `,
+          trackedHours: 160,
+          rate: 50,
+          total: 8000,
+        },
+      ],
+      projectName: `   ProjectOne   `,
+      contractNumber: `   123   `,
+    })
+
+    cy
+      .window()
+      .then((window) => {
+        cy.stub(window.navigator.clipboard, `writeText`)
+          .as(`copyToClipboard`)
+          .resolves()
+      })
+
+    cy
+      .getByData(`invoices-copy-button`)
+      .click()
+
+    cy
+      .get(`@copyToClipboard`)
+      .should(
+        `have.been.calledOnceWith`,
+        `123; October 2026; ProjectOne;\nDeveloper: €50 * 160h = €8 000\nTotal: €8 000`,
+      )
+  })
 }
 
 function copyButtonTextTests() {

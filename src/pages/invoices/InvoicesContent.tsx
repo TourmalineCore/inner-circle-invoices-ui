@@ -40,7 +40,7 @@ export const InvoicesContent = observer(() => {
         trackedHours,
         total,
       } )=> {
-        return `${position || `-`}: €${rate} * ${trackedHours}h = €${formatThousands(total!)}`
+        return `${position!.trim() || `-`}: €${rate} * ${trackedHours}h = €${formatThousands(total!)}`
       })
       .join(`\n`) + `\nTotal: €${formatThousands(totalAmount!)}`
 
@@ -50,7 +50,7 @@ export const InvoicesContent = observer(() => {
 
     const year = selectedDate.getFullYear()
 
-    navigator.clipboard.writeText(`${contractNumber}; ${monthName} ${year}; ${projectName};\n` + invoiceText)
+    navigator.clipboard.writeText(`${contractNumber.trim()}; ${monthName} ${year}; ${projectName.trim()};\n` + invoiceText)
 
     setIsCopied(true)
     
