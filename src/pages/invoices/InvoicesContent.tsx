@@ -107,8 +107,7 @@ export const InvoicesContent = observer(() => {
         />
 
         <input
-          className='invoices__project-name-input'
-          data-cy={`invoices-project-name-input`}
+          data-cy='invoices-project-name-input'
           placeholder='Project name'
           onChange={(e) => invoicesState.setProjectName({
             projectName: e.target.value,
@@ -116,8 +115,7 @@ export const InvoicesContent = observer(() => {
         />
 
         <input
-          className='invoices__cotract-number-input'
-          data-cy={`invoices-contract-number-input`}
+          data-cy='invoices-contract-number-input'
           placeholder='Contract number'
           onChange={(e) => invoicesState.setContractNumber({
             contractNumber: e.target.value,
