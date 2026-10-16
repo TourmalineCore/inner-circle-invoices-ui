@@ -163,11 +163,11 @@ export class InvoicesState {
 
     if (!employeeToMergeInvoice.mergeToEmployeeId) {
       const newTargetEmployeeTrackedHours = formatToTwoDecimalPlaces(
-        Number(targetEmployeeInvoice.trackedHours + Number(employeeToMergeInvoice.trackedHours)),
+        targetEmployeeInvoice.trackedHours + employeeToMergeInvoice.trackedHours,
       )
 
       const newTargetEmployeeTotal = targetEmployeeInvoice.rate
-        ? formatToTwoDecimalPlaces(targetEmployeeInvoice.rate * Number(newTargetEmployeeTrackedHours))
+        ? formatToTwoDecimalPlaces(targetEmployeeInvoice.rate * newTargetEmployeeTrackedHours)
         : null
 
       this._invoicesData[employeeToMergeIndex] = {
@@ -182,12 +182,12 @@ export class InvoicesState {
       }
     }
     else {
-      const newTrackedHours = formatToTwoDecimalPlaces(
-        Number(targetEmployeeInvoice.trackedHours - Number(employeeToMergeInvoice.trackedHours)),
+      const newTargetEmployeeTrackedHours = formatToTwoDecimalPlaces(
+        targetEmployeeInvoice.trackedHours - employeeToMergeInvoice.trackedHours,
       )
 
-      const newTotal = targetEmployeeInvoice.rate
-        ? formatToTwoDecimalPlaces(targetEmployeeInvoice.rate * Number(newTrackedHours))
+      const newTargetEmployeeTotal = targetEmployeeInvoice.rate
+        ? formatToTwoDecimalPlaces(targetEmployeeInvoice.rate * newTargetEmployeeTrackedHours)
         : null
 
       this._invoicesData[employeeToMergeIndex] = {
@@ -197,8 +197,8 @@ export class InvoicesState {
 
       this._invoicesData[targetEmployeeIndex] = {
         ...this._invoicesData[targetEmployeeIndex],
-        trackedHours: newTrackedHours,
-        total: newTotal,
+        trackedHours: newTargetEmployeeTrackedHours,
+        total: newTargetEmployeeTotal,
       }
     }
 
