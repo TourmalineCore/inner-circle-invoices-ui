@@ -44,4 +44,9 @@
   &__empty-project-option {
     display: none;
   }
+
+  &__merge-select-container {
+    width: 100%;
+    min-width: 0;
+  }
 }
