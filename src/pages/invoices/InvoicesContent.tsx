@@ -21,6 +21,9 @@ export const InvoicesContent = observer(() => {
     totalTrackedHours,
     totalAmount,
     projects,
+    purchaseOrderNumber,
+    projectName,
+    isCopyButtonDisabled,
   } = invoicesState
 
   const [
@@ -37,11 +40,17 @@ export const InvoicesContent = observer(() => {
         trackedHours,
         total,
       } )=> {
-        return `${position || `-`}: €${rate} * ${trackedHours}h = €${formatThousands(total!)}`
+        return `${position!.trim() || `-`}: €${rate} * ${trackedHours}h = €${formatThousands(total!)}`
       })
       .join(`\n`) + `\nTotal: €${formatThousands(totalAmount!)}`
 
-    navigator.clipboard.writeText(invoiceText)
+    const monthName = selectedDate.toLocaleString(`en-US`, {
+      month: `long`, 
+    })
+
+    const year = selectedDate.getFullYear()
+
+    navigator.clipboard.writeText(`PO ${purchaseOrderNumber.trim()}; Period: ${monthName} ${year}; Project: ${projectName.trim()};\n` + invoiceText)
 
     setIsCopied(true)
     
@@ -49,8 +58,6 @@ export const InvoicesContent = observer(() => {
       setIsCopied(false)
     }, 1000)
   }
-
-  const isCopyButtonDisabled = totalAmount === null || invoicesData.length < 1
 
   const invoicesDataWithoutMergedEmployees = invoicesData.filter((invoice) => !invoice.mergeToEmployeeId)
 
@@ -97,6 +104,20 @@ export const InvoicesContent = observer(() => {
               newDate: date,
             })
           }}
+        />
+        <input
+          data-cy='invoices-purchase-order-number-input'
+          placeholder='Purchase order number'
+          onChange={(e) => invoicesState.setPurchaseOrderNumber({
+            purchaseOrderNumber: e.target.value,
+          })}
+        />
+        <input
+          data-cy='invoices-project-name-input'
+          placeholder='Project name'
+          onChange={(e) => invoicesState.setProjectName({
+            projectName: e.target.value,
+          })}
         />
       </div>
       <ClientTable<InvoiceData>
@@ -247,7 +268,7 @@ export const InvoicesContent = observer(() => {
         onClick={handleCopyAsText}
         disabled={isCopyButtonDisabled}
         className='invoices__copy-button'
-        title={isCopyButtonDisabled ? `Fill in all rates to enable copying` : `Copy as text`}
+        title={isCopyButtonDisabled ? `Fill in all required fields to enable copying` : `Copy as text`}
       >
         {isCopied ? `Copied!` : `Copy as Text`}
       </button>

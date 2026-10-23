@@ -5,6 +5,7 @@ describe(`InvoicesState`, () => {
   describe(`Total Amount`, totalAmountTests)
   describe(`Select Project`, selectProjectTests)
   describe(`Toggle Merge Selection`, toggleMergeSelectionTests)
+  describe(`Is Copy Button Disabled`, isCopyButtonDisabledTests)
 })
 
 function totalHoursTests() {
@@ -308,5 +309,168 @@ function toggleMergeSelectionTests() {
     expect(invoicesState.totalAmount)
       .to
       .equal(2500)
+  })
+}
+
+function isCopyButtonDisabledTests() {
+  let invoicesState: InvoicesState
+
+  beforeEach(() => {
+    invoicesState = new InvoicesState()
+  })
+
+  it(`
+  GIVEN an empty invoices data
+  WHEN isCopyButtonDisabled is called
+  SHOULD return true
+  `, () => {
+    invoicesState.initializeInvoicesData({
+      invoicesData: [],
+    })
+
+    expect(invoicesState.isCopyButtonDisabled)
+      .to
+      .be
+      .true
+  })
+
+  it(`
+  GIVEN an invoices data with one employee
+  WHEN rate is not filled
+  SHOULD return true
+  `, () => {
+    const mockInvoicesData = [
+      {
+        employeeId: 1,
+        fullName: `John Doe`,
+        position: `Developer`,
+        trackedHours: 40,
+      },
+    ]
+
+    invoicesState.initializeInvoicesData({
+      invoicesData: mockInvoicesData,
+    })
+
+    expect(invoicesState.isCopyButtonDisabled)
+      .to
+      .be
+      .true
+  })
+
+  it(`
+  GIVEN an invoices data with one employee and a filled rate
+  WHEN project name and purchase order number are not filled
+  SHOULD return true
+  `, () => {
+    const mockInvoicesData = [
+      {
+        employeeId: 1,
+        fullName: `John Doe`,
+        position: `Developer`,
+        trackedHours: 40,
+        rate: 20,
+      },
+    ]
+
+    invoicesState.initializeInvoicesData({
+      invoicesData: mockInvoicesData,
+    })
+
+    expect(invoicesState.isCopyButtonDisabled)
+      .to
+      .be
+      .true
+  })
+
+  it(`
+  GIVEN an invoices data with one employee and a filled rate
+  WHEN only project name is filled
+  SHOULD return true
+  `, () => {
+    const mockInvoicesData = [
+      {
+        employeeId: 1,
+        fullName: `John Doe`,
+        position: `Developer`,
+        trackedHours: 40,
+        rate: 20,
+      },
+    ]
+
+    invoicesState.initializeInvoicesData({
+      invoicesData: mockInvoicesData,
+    })
+
+    invoicesState.setProjectName({
+      projectName: `ProjectOne`,
+    })
+
+    expect(invoicesState.isCopyButtonDisabled)
+      .to
+      .be
+      .true
+  })
+
+  it(`
+  GIVEN an invoices data with one employee and a filled rate
+  WHEN only purchase order number is filled
+  SHOULD return true
+  `, () => {
+    const mockInvoicesData = [
+      {
+        employeeId: 1,
+        fullName: `John Doe`,
+        position: `Developer`,
+        trackedHours: 40,
+        rate: 20,
+      },
+    ]
+
+    invoicesState.initializeInvoicesData({
+      invoicesData: mockInvoicesData,
+    })
+
+    invoicesState.setPurchaseOrderNumber({
+      purchaseOrderNumber: `123`,
+    })
+
+    expect(invoicesState.isCopyButtonDisabled)
+      .to
+      .be
+      .true
+  })
+
+  it(`
+  GIVEN an invoices data with one employee and a filled rate
+  WHEN project name and purchase order number are filled
+  SHOULD return false
+  `, () => {
+    const mockInvoicesData = [
+      {
+        employeeId: 1,
+        fullName: `John Doe`,
+        position: `Developer`,
+        trackedHours: 40,
+        rate: 20,
+      },
+    ]
+
+    invoicesState.initializeInvoicesData({
+      invoicesData: mockInvoicesData,
+    })
+
+    invoicesState.setProjectName({
+      projectName: `ProjectOne`,
+    })
+
+    invoicesState.setPurchaseOrderNumber({
+      purchaseOrderNumber: `123`,
+    })
+
+    expect(invoicesState.isCopyButtonDisabled)
+      .to
+      .be
+      .false
   })
 }
