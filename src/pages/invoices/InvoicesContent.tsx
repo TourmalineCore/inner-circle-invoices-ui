@@ -21,7 +21,7 @@ export const InvoicesContent = observer(() => {
     totalTrackedHours,
     totalAmount,
     projects,
-    purchaseOrder,
+    purchaseOrderNumber,
     projectName,
     isCopyButtonDisabled,
   } = invoicesState
@@ -50,7 +50,7 @@ export const InvoicesContent = observer(() => {
 
     const year = selectedDate.getFullYear()
 
-    navigator.clipboard.writeText(`PO ${purchaseOrder.trim()}; Period: ${monthName} ${year}; Project: ${projectName.trim()};\n` + invoiceText)
+    navigator.clipboard.writeText(`PO ${purchaseOrderNumber.trim()}; Period: ${monthName} ${year}; Project: ${projectName.trim()};\n` + invoiceText)
 
     setIsCopied(true)
     
@@ -106,10 +106,10 @@ export const InvoicesContent = observer(() => {
           }}
         />
         <input
-          data-cy='invoices-purchase-order-input'
-          placeholder='Purchase order'
-          onChange={(e) => invoicesState.setPurchaseOrder({
-            purchaseOrder: e.target.value,
+          data-cy='invoices-purchase-order-number-input'
+          placeholder='Purchase order number'
+          onChange={(e) => invoicesState.setPurchaseOrderNumber({
+            purchaseOrderNumber: e.target.value,
           })}
         />
         <input

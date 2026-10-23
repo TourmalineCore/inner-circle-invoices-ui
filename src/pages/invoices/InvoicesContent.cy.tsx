@@ -9,7 +9,7 @@ describe(`InvoicesContent`, () => {
   describe(`Copy Button Text`, copyButtonTextTests)
   describe(`Merge Employee's Hours `, mergeEmployeesHoursTests)
   describe(`Fill Project Name Input`, fillProjectNameInputTests)
-  describe(`Fill Purchase Order Input`, fillPurchaseOrderInputTests)
+  describe(`Fill Purchase Order Number Input`, fillPurchaseOrderNumberInputTests)
 })
 
 function canCopyTests() {
@@ -51,7 +51,7 @@ function canCopyTests() {
         },
       ],
       projectName: `ProjectOne`,
-      purchaseOrder: `123`,
+      purchaseOrderNumber: `123`,
     })
 
     cy
@@ -90,7 +90,7 @@ function copyToClipboardTests() {
         },
       ],
       projectName: `ProjectOne`,
-      purchaseOrder: `123`,
+      purchaseOrderNumber: `123`,
     })
  
     cy
@@ -114,7 +114,7 @@ function copyToClipboardTests() {
   })
 
   it(`
-  GIVEN purchase order, project name and position contain leading/trailing spaces
+  GIVEN purchase order number, project name and position contain leading/trailing spaces
   WHEN "Copy as Text" button is clicked
   SHOULD trim them in the copied text
   `, () => {
@@ -134,7 +134,7 @@ function copyToClipboardTests() {
         },
       ],
       projectName: `   ProjectOne   `,
-      purchaseOrder: `   123   `,
+      purchaseOrderNumber: `   123   `,
     })
 
     cy
@@ -176,7 +176,7 @@ function copyButtonTextTests() {
         },
       ],
       projectName: `ProjectOne`,
-      purchaseOrder: `123`,
+      purchaseOrderNumber: `123`,
     })
 
     cy
@@ -236,7 +236,7 @@ function mergeEmployeesHoursTests() {
         },
       ],
       projectName: `ProjectOne`,
-      purchaseOrder: `123`,
+      purchaseOrderNumber: `123`,
     })
 
     cy
@@ -331,13 +331,13 @@ function fillProjectNameInputTests() {
   })
 }
 
-function fillPurchaseOrderInputTests() {
+function fillPurchaseOrderNumberInputTests() {
   it(`
   GIVEN invoices table
-  WHEN a purchase order is typed
-  SHOULD invoices state purchaseOrder be updated with the typed value
+  WHEN a purchase order number is typed
+  SHOULD invoices state purchaseOrderNumber be updated with the typed value
   `, () => {
-    const purchaseOrder = `123`
+    const purchaseOrderNumber = `123`
 
     mountComponent({
       invoicesDataForInitialize: [
@@ -350,17 +350,17 @@ function fillPurchaseOrderInputTests() {
     })
 
     cy
-      .getByData(`invoices-purchase-order-input`)
-      .type(purchaseOrder)
+      .getByData(`invoices-purchase-order-number-input`)
+      .type(purchaseOrderNumber)
 
     cy
-      .getByData(`invoices-purchase-order-input`)
-      .should(`have.value`, purchaseOrder)
+      .getByData(`invoices-purchase-order-number-input`)
+      .should(`have.value`, purchaseOrderNumber)
 
     cy
       .get<InvoicesState>(`@invoicesState`)
       .should((invoicesState) => {
-        expect(invoicesState.purchaseOrder).to.eq(purchaseOrder)
+        expect(invoicesState.purchaseOrderNumber).to.eq(purchaseOrderNumber)
       })
   })
 }
@@ -368,11 +368,11 @@ function fillPurchaseOrderInputTests() {
 function mountComponent({
   invoicesDataForInitialize,
   projectName = ``,
-  purchaseOrder= ``,
+  purchaseOrderNumber = ``,
 }: {
   invoicesDataForInitialize: InvoiceData[],
   projectName?: string,
-  purchaseOrder?: string,
+  purchaseOrderNumber?: string,
 }) {
   const invoicesState = new InvoicesState()
 
@@ -384,8 +384,8 @@ function mountComponent({
     projectName, 
   })
 
-  invoicesState.setPurchaseOrder({
-    purchaseOrder, 
+  invoicesState.setPurchaseOrderNumber({
+    purchaseOrderNumber, 
   })
 
   cy
