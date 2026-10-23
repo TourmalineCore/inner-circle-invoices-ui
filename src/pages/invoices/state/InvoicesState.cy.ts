@@ -360,7 +360,7 @@ function isCopyButtonDisabledTests() {
 
   it(`
   GIVEN an invoices data with one employee and a filled rate
-  WHEN project name and contract number are not filled
+  WHEN project name and purchase order are not filled
   SHOULD return true
   `, () => {
     const mockInvoicesData = [
@@ -414,7 +414,7 @@ function isCopyButtonDisabledTests() {
 
   it(`
   GIVEN an invoices data with one employee and a filled rate
-  WHEN only contract number is filled
+  WHEN only purchase order is filled
   SHOULD return true
   `, () => {
     const mockInvoicesData = [
@@ -431,8 +431,8 @@ function isCopyButtonDisabledTests() {
       invoicesData: mockInvoicesData,
     })
 
-    invoicesState.setContractNumber({
-      contractNumber: `123`,
+    invoicesState.setPurchaseOrder({
+      purchaseOrder: `123`,
     })
 
     expect(invoicesState.isCopyButtonDisabled)
@@ -443,7 +443,7 @@ function isCopyButtonDisabledTests() {
 
   it(`
   GIVEN an invoices data with one employee and a filled rate
-  WHEN project name and contract number are filled
+  WHEN project name and purchase order are filled
   SHOULD return false
   `, () => {
     const mockInvoicesData = [
@@ -464,8 +464,8 @@ function isCopyButtonDisabledTests() {
       projectName: `ProjectOne`,
     })
 
-    invoicesState.setContractNumber({
-      contractNumber: `123`,
+    invoicesState.setPurchaseOrder({
+      purchaseOrder: `123`,
     })
 
     expect(invoicesState.isCopyButtonDisabled)

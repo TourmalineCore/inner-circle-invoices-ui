@@ -10,7 +10,7 @@ export class InvoicesState {
   private _projects: ProjectDto[] = []
   private _selectedProjectId = UNSPECIFIED_PROJECT_ID 
   private _projectName = ``
-  private _contractNumber = ``
+  private _purchaseOrder = ``
 
   constructor() {
     makeAutoObservable(this)
@@ -55,8 +55,8 @@ export class InvoicesState {
     return this._projectName
   }
 
-  get contractNumber() {
-    return this._contractNumber
+  get purchaseOrder() {
+    return this._purchaseOrder
   }
 
   get monthYearDate() {
@@ -72,7 +72,7 @@ export class InvoicesState {
     return this.totalAmount === null
       || this._invoicesData.length < 1
       || this._projectName === ``
-      || this._contractNumber === ``
+      || this._purchaseOrder === ``
   }
 
   get totalTrackedHours() {
@@ -164,12 +164,12 @@ export class InvoicesState {
     this._projectName = projectName
   }
 
-  setContractNumber({
-    contractNumber,
+  setPurchaseOrder({
+    purchaseOrder,
   }: {
-    contractNumber: string,
+    purchaseOrder: string,
   }) {
-    this._contractNumber = contractNumber
+    this._purchaseOrder = purchaseOrder
   }
 
   toggleMergeSelection({

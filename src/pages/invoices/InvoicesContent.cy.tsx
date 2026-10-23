@@ -9,7 +9,7 @@ describe(`InvoicesContent`, () => {
   describe(`Copy Button Text`, copyButtonTextTests)
   describe(`Merge Employee's Hours `, mergeEmployeesHoursTests)
   describe(`Fill Project Name Input`, fillProjectNameInputTests)
-  describe(`Fill Contract Number Input`, fillContractNumberInputTests)
+  describe(`Fill Purchase Order Input`, fillPurchaseOrderInputTests)
 })
 
 function canCopyTests() {
@@ -51,7 +51,7 @@ function canCopyTests() {
         },
       ],
       projectName: `ProjectOne`,
-      contractNumber: `123`,
+      purchaseOrder: `123`,
     })
 
     cy
@@ -90,7 +90,7 @@ function copyToClipboardTests() {
         },
       ],
       projectName: `ProjectOne`,
-      contractNumber: `123`,
+      purchaseOrder: `123`,
     })
  
     cy
@@ -109,12 +109,12 @@ function copyToClipboardTests() {
       .get(`@copyToClipboard`)
       .should(
         `have.been.calledOnceWith`,
-        `123; October 2026; ProjectOne;\nDeveloper: €50 * 160h = €8 000\nDesigner: €45 * 80h = €3 600\nTotal: €11 600`,
+        `PO 123; Period: October 2026; Project: ProjectOne;\nDeveloper: €50 * 160h = €8 000\nDesigner: €45 * 80h = €3 600\nTotal: €11 600`,
       )
   })
 
   it(`
-  GIVEN contract number, project name and position contain leading/trailing spaces
+  GIVEN purchase order, project name and position contain leading/trailing spaces
   WHEN "Copy as Text" button is clicked
   SHOULD trim them in the copied text
   `, () => {
@@ -134,7 +134,7 @@ function copyToClipboardTests() {
         },
       ],
       projectName: `   ProjectOne   `,
-      contractNumber: `   123   `,
+      purchaseOrder: `   123   `,
     })
 
     cy
@@ -153,7 +153,7 @@ function copyToClipboardTests() {
       .get(`@copyToClipboard`)
       .should(
         `have.been.calledOnceWith`,
-        `123; October 2026; ProjectOne;\nDeveloper: €50 * 160h = €8 000\nTotal: €8 000`,
+        `PO 123; Period: October 2026; Project: ProjectOne;\nDeveloper: €50 * 160h = €8 000\nTotal: €8 000`,
       )
   })
 }
@@ -176,7 +176,7 @@ function copyButtonTextTests() {
         },
       ],
       projectName: `ProjectOne`,
-      contractNumber: `123`,
+      purchaseOrder: `123`,
     })
 
     cy
@@ -236,7 +236,7 @@ function mergeEmployeesHoursTests() {
         },
       ],
       projectName: `ProjectOne`,
-      contractNumber: `123`,
+      purchaseOrder: `123`,
     })
 
     cy
@@ -291,7 +291,7 @@ function mergeEmployeesHoursTests() {
       .get(`@copyToClipboard`)
       .should(
         `have.been.calledOnceWith`,
-        `123; October 2026; ProjectOne;\nDeveloper: €20 * 200h = €4 000\nTotal: €4 000`,
+        `PO 123; Period: October 2026; Project: ProjectOne;\nDeveloper: €20 * 200h = €4 000\nTotal: €4 000`,
       )
   },
   )    
@@ -331,13 +331,13 @@ function fillProjectNameInputTests() {
   })
 }
 
-function fillContractNumberInputTests() {
+function fillPurchaseOrderInputTests() {
   it(`
   GIVEN invoices table
-  WHEN a contract number is typed
-  SHOULD invoices state contractNumber be updated with the typed value
+  WHEN a purchase order is typed
+  SHOULD invoices state purchaseOrder be updated with the typed value
   `, () => {
-    const contractNumber = `123`
+    const purchaseOrder = `123`
 
     mountComponent({
       invoicesDataForInitialize: [
@@ -350,17 +350,17 @@ function fillContractNumberInputTests() {
     })
 
     cy
-      .getByData(`invoices-contract-number-input`)
-      .type(contractNumber)
+      .getByData(`invoices-purchase-order-input`)
+      .type(purchaseOrder)
 
     cy
-      .getByData(`invoices-contract-number-input`)
-      .should(`have.value`, contractNumber)
+      .getByData(`invoices-purchase-order-input`)
+      .should(`have.value`, purchaseOrder)
 
     cy
       .get<InvoicesState>(`@invoicesState`)
       .should((invoicesState) => {
-        expect(invoicesState.contractNumber).to.eq(contractNumber)
+        expect(invoicesState.purchaseOrder).to.eq(purchaseOrder)
       })
   })
 }
@@ -368,11 +368,11 @@ function fillContractNumberInputTests() {
 function mountComponent({
   invoicesDataForInitialize,
   projectName = ``,
-  contractNumber= ``,
+  purchaseOrder= ``,
 }: {
   invoicesDataForInitialize: InvoiceData[],
   projectName?: string,
-  contractNumber?: string,
+  purchaseOrder?: string,
 }) {
   const invoicesState = new InvoicesState()
 
@@ -384,8 +384,8 @@ function mountComponent({
     projectName, 
   })
 
-  invoicesState.setContractNumber({
-    contractNumber, 
+  invoicesState.setPurchaseOrder({
+    purchaseOrder, 
   })
 
   cy
