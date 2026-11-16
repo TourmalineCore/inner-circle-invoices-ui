@@ -479,15 +479,18 @@ function isCopyButtonDisabledTests() {
 function getSelectedDateTests() {   
   it(`
   GIVEN default invoices state
-  WHEN today is Nov 10 2026
+  WHEN today is Nov 14 2026
   THEN selected date is Oct 2026
   `, () => {
-    cy.clock(new Date(2026, 10, 10), [
+    // in new Date, months are numbered from 0, so 10 === November
+    cy.clock(new Date(2026, 10, 14), [
       `Date`,
     ])
       .then(() => {
         const invoicesState = new InvoicesState()
 
+        // monthYearDate returns the month in the format 1–12
+        // so 10 here means October
         expect(invoicesState.monthYearDate.month)
           .to
           .be
