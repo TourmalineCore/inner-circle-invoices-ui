@@ -478,9 +478,9 @@ function isCopyButtonDisabledTests() {
 
 function getSelectedDateTests() {   
   it(`
-  GIVEN invoices state
-  WHEN today is Nov 10
-  THEN return Oct 10
+  GIVEN default invoices state
+  WHEN today is Nov 10 2026
+  THEN selected date is Oct 2026
   `, () => {
     cy.clock(new Date(2026, 10, 10), [
       `Date`,
@@ -492,13 +492,18 @@ function getSelectedDateTests() {
           .to
           .be
           .eq(10)
+
+        expect(invoicesState.monthYearDate.year)
+          .to
+          .be
+          .eq(2026)
       })
   })
 
   it(`
-  GIVEN invoices state
-  WHEN today is Nov 15
-  THEN return Oct 15
+  GIVEN default invoices state
+  WHEN today is Nov 15 2026 (checking the "<= 15" rule)
+  THEN selected date is Oct 2026
   `, () => {
     cy.clock(new Date(2026, 10, 15), [
       `Date`,
@@ -510,13 +515,18 @@ function getSelectedDateTests() {
           .to
           .be
           .eq(10)
+
+        expect(invoicesState.monthYearDate.year)
+          .to
+          .be
+          .eq(2026)
       })
   })
 
   it(`
-  GIVEN invoices state
-  WHEN today is Nov 16
-  THEN return Nov 16
+  GIVEN default invoices state
+  WHEN today is Nov 16 2026
+  THEN selected date is Nov 2026
   `, () => {
     cy.clock(new Date(2026, 10, 16), [
       `Date`,
@@ -528,13 +538,18 @@ function getSelectedDateTests() {
           .to
           .be
           .eq(11)
+
+        expect(invoicesState.monthYearDate.year)
+          .to
+          .be
+          .eq(2026)
       })
   })
 
   it(`
-  GIVEN invoices state
+  GIVEN default invoices state
   WHEN today is Jan 5 2027
-  THEN return Dec 5 2026
+  THEN selected date is Dec 2026
   `, () => {
     cy.clock(new Date(2027, 0, 5), [
       `Date`,
