@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { makeAutoObservable } from 'mobx'
 import { InvoiceData, ProjectDto } from '../types'
 import { formatToTwoDecimalPlaces } from '../../../common/utils/formatToTwoDecimalPlaces'
@@ -6,7 +7,7 @@ export const UNSPECIFIED_PROJECT_ID = 0
 
 export class InvoicesState {
   private _invoicesData: InvoiceData[] = [] 
-  private _selectedDate = new Date()
+  private _selectedDate = getSelectedDate()
   private _projects: ProjectDto[] = []
   private _selectedProjectId = UNSPECIFIED_PROJECT_ID 
   private _projectName = ``
@@ -240,4 +241,15 @@ export class InvoicesState {
       ...this._invoicesData,
     ]
   }
+}
+
+function getSelectedDate() {
+  const currentDate = new Date()
+  
+  return currentDate
+    .getDate() <= 15 
+    ? moment(currentDate)
+      .subtract(1, `month`)
+      .toDate()
+    : currentDate
 }

@@ -6,6 +6,7 @@ describe(`InvoicesState`, () => {
   describe(`Select Project`, selectProjectTests)
   describe(`Toggle Merge Selection`, toggleMergeSelectionTests)
   describe(`Is Copy Button Disabled`, isCopyButtonDisabledTests)
+  describe(`Get Selected Date`, getSelectedDateTests)
 })
 
 function totalHoursTests() {
@@ -472,5 +473,102 @@ function isCopyButtonDisabledTests() {
       .to
       .be
       .false
+  })
+}
+
+function getSelectedDateTests() {   
+  it(`
+  GIVEN default invoices state
+  WHEN today is Nov 14 2026
+  THEN selected date is Oct 2026
+  `, () => {
+    // in new Date, months are numbered from 0, so 10 === November
+    cy.clock(new Date(2026, 10, 14), [
+      `Date`,
+    ])
+      .then(() => {
+        const invoicesState = new InvoicesState()
+
+        // monthYearDate returns the month in the format 1–12
+        // so 10 here means October
+        expect(invoicesState.monthYearDate.month)
+          .to
+          .be
+          .eq(10)
+
+        expect(invoicesState.monthYearDate.year)
+          .to
+          .be
+          .eq(2026)
+      })
+  })
+
+  it(`
+  GIVEN default invoices state
+  WHEN today is Nov 15 2026 (checking the "<= 15" rule)
+  THEN selected date is Oct 2026
+  `, () => {
+    cy.clock(new Date(2026, 10, 15), [
+      `Date`,
+    ])
+      .then(() => {
+        const invoicesState = new InvoicesState()
+
+        expect(invoicesState.monthYearDate.month)
+          .to
+          .be
+          .eq(10)
+
+        expect(invoicesState.monthYearDate.year)
+          .to
+          .be
+          .eq(2026)
+      })
+  })
+
+  it(`
+  GIVEN default invoices state
+  WHEN today is Nov 16 2026
+  THEN selected date is Nov 2026
+  `, () => {
+    cy.clock(new Date(2026, 10, 16), [
+      `Date`,
+    ])
+      .then(() => {
+        const invoicesState = new InvoicesState()
+
+        expect(invoicesState.monthYearDate.month)
+          .to
+          .be
+          .eq(11)
+
+        expect(invoicesState.monthYearDate.year)
+          .to
+          .be
+          .eq(2026)
+      })
+  })
+
+  it(`
+  GIVEN default invoices state
+  WHEN today is Jan 5 2027
+  THEN selected date is Dec 2026
+  `, () => {
+    cy.clock(new Date(2027, 0, 5), [
+      `Date`,
+    ])
+      .then(() => {
+        const invoicesState = new InvoicesState()
+
+        expect(invoicesState.monthYearDate.month)
+          .to
+          .be
+          .eq(12)
+        
+        expect(invoicesState.monthYearDate.year)
+          .to
+          .be
+          .eq(2026)
+      })
   })
 }

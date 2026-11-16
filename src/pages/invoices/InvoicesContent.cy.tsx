@@ -61,15 +61,17 @@ function canCopyTests() {
 }
 
 function copyToClipboardTests() {
+  beforeEach(() => {
+    cy.clock(new Date(2026, 9, 21), [
+      `Date`,
+    ])
+  })
+
   it(`
   GIVEN all required fields are filled
   WHEN "Copy as Text" button is clicked
   SHOULD copy correct invoice text to clipboard
   `, () => {
-    cy.clock(new Date(2026, 9, 21), [
-      `Date`,
-    ])
-    
     mountComponent({
       invoicesDataForInitialize: [
         {
@@ -118,10 +120,6 @@ function copyToClipboardTests() {
   WHEN "Copy as Text" button is clicked
   SHOULD trim them in the copied text
   `, () => {
-    cy.clock(new Date(2026, 9, 21), [
-      `Date`,
-    ])
-
     mountComponent({
       invoicesDataForInitialize: [
         {
@@ -202,6 +200,12 @@ function copyButtonTextTests() {
 }
 
 function mergeEmployeesHoursTests() {
+  beforeEach(() => {
+    cy.clock(new Date(2026, 9, 21), [
+      `Date`,
+    ])
+  })
+
   it(`
   GIVEN invoice table with employees tracked hours
   WHEN manager merges one employee's hours into another employee
@@ -209,11 +213,7 @@ function mergeEmployeesHoursTests() {
   AND the total amount should be calculated as summed hours multiplied by the rate of the target employee
   AND the merged employee should be removed from the table
   AND the invoice text should not contain the merged employee
-  `, () => {
-    cy.clock(new Date(2026, 9, 21), [
-      `Date`,
-    ])
-    
+  `, () => {    
     mountComponent({
       invoicesDataForInitialize: [
         {
