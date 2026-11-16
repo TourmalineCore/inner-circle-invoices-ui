@@ -6,6 +6,7 @@ describe(`InvoicesState`, () => {
   describe(`Select Project`, selectProjectTests)
   describe(`Toggle Merge Selection`, toggleMergeSelectionTests)
   describe(`Is Copy Button Disabled`, isCopyButtonDisabledTests)
+  describe(`Get Selected Date`, getSelectedDateTests)
 })
 
 function totalHoursTests() {
@@ -472,5 +473,84 @@ function isCopyButtonDisabledTests() {
       .to
       .be
       .false
+  })
+}
+
+function getSelectedDateTests() {   
+  it(`
+  GIVEN invoices state
+  WHEN today is Nov 10
+  THEN return Oct 10
+  `, () => {
+    cy.clock(new Date(2026, 10, 10), [
+      `Date`,
+    ])
+      .then(() => {
+        const invoicesState = new InvoicesState()
+
+        expect(invoicesState.monthYearDate.month)
+          .to
+          .be
+          .eq(10)
+      })
+  })
+
+  it(`
+  GIVEN invoices state
+  WHEN today is Nov 15
+  THEN return Oct 15
+  `, () => {
+    cy.clock(new Date(2026, 10, 15), [
+      `Date`,
+    ])
+      .then(() => {
+        const invoicesState = new InvoicesState()
+
+        expect(invoicesState.monthYearDate.month)
+          .to
+          .be
+          .eq(10)
+      })
+  })
+
+  it(`
+  GIVEN invoices state
+  WHEN today is Nov 16
+  THEN return Nov 16
+  `, () => {
+    cy.clock(new Date(2026, 10, 16), [
+      `Date`,
+    ])
+      .then(() => {
+        const invoicesState = new InvoicesState()
+
+        expect(invoicesState.monthYearDate.month)
+          .to
+          .be
+          .eq(11)
+      })
+  })
+
+  it(`
+  GIVEN invoices state
+  WHEN today is Jan 5 2027
+  THEN return Dec 5 2026
+  `, () => {
+    cy.clock(new Date(2027, 0, 5), [
+      `Date`,
+    ])
+      .then(() => {
+        const invoicesState = new InvoicesState()
+
+        expect(invoicesState.monthYearDate.month)
+          .to
+          .be
+          .eq(12)
+        
+        expect(invoicesState.monthYearDate.year)
+          .to
+          .be
+          .eq(2026)
+      })
   })
 }
